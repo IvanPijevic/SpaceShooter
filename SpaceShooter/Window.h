@@ -9,8 +9,8 @@
 class Window
 {
 public:
-	Window(Size screenSize);
-	//Window(short width, short height);
+	//Window(Size screenSize);
+	Window(short width, short height);
 	~Window();
 
 	void Clear();
@@ -20,9 +20,13 @@ public:
 private:
 	HANDLE m_frontBuffer; 
 	HANDLE m_backBuffer;
+
 	Position m_windowPosition;
-	Size m_screenSize;
+	Size m_windowSize;
 	std::vector<CHAR_INFO> m_buffer;
+
+	short m_width;
+	short m_height;
 };
 
 #endif  //WINDOW_H

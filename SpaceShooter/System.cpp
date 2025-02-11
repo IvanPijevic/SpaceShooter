@@ -1,7 +1,8 @@
 #include "System.h"
 
 System::System() :
-	m_gameState(GameState::PLAY)
+	m_gameState(GameState::PLAY),
+	m_window(128, 64)  // == 1024x768 ?
 {
 
 }
@@ -28,6 +29,11 @@ void System::gameLoop()
 
 void System::draw()
 {
+	m_window.Clear();
+
+
+
+	m_window.Draw();
 
 }
 

@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="SpaceShooter.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataStructures.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
