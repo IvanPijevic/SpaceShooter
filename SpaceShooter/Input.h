@@ -3,6 +3,11 @@
 
 #include <unordered_map>
 
+enum class Keys
+{
+	W = 0x57, A = 0x41, S = 0x53, D = 0x44, ESC = 0x1B
+};
+
 class Input
 {
 public:

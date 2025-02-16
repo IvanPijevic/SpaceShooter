@@ -2,9 +2,12 @@
 #define SYSTEM_H
 
 #include <iostream>
-#include <Windows.h>	
+#include <Windows.h>
+
+#include <SDL3/SDL.h>
 
 #include "Window.h"
+#include "Input.h"
 
 enum class GameState
 {
@@ -25,6 +28,7 @@ public:
 private:
 	GameState m_gameState;
 	Window m_window;
+	Input m_input;
 };
 
 #endif  //SYSTEM_H
