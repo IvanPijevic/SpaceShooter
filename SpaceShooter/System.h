@@ -4,8 +4,6 @@
 #include <iostream>
 #include <Windows.h>
 
-#include <SDL3/SDL.h>
-
 #include "Window.h"
 #include "Input.h"
 
@@ -29,6 +27,8 @@ private:
 	GameState m_gameState;
 	Window m_window;
 	Input m_input;
+	short m_x;
+	short m_y;
 };
 
 #endif  //SYSTEM_H
