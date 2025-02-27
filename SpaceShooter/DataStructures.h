@@ -9,6 +9,15 @@ struct Position
 	short y;
 };
 
+struct Direction
+{
+	Direction() : x(0), y(0) {}
+	Direction(short X, short Y) : x(X), y(Y) {}
+
+	short x;
+	short y;
+};
+
 struct Size
 {
 	Size(short X, short Y) : x(X), y(Y) {}
