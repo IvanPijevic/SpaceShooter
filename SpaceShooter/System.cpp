@@ -2,16 +2,16 @@
 
 System::System() :
 	m_gameState(GameState::PLAY),
-	m_window(128, 64),  // == 1024x768 ?
-	m_x(0),
-	m_y(0)
+	m_window(128, 64),  // == 1024x768
+	m_x(58),
+	m_y(27)
 {
 
 }
 
 void System::initGame()
 {
-
+	
 }
 
 void System::processInput()
@@ -41,13 +41,13 @@ void System::processInput()
 			}
 
 			if (m_input.isKeyPressed('W')) {
-				m_y += 1;
+				m_y -= 1;
 			}
 			if (m_input.isKeyPressed('A')) {
 				m_x -= 1;
 			}
 			if (m_input.isKeyPressed('S')) {
-				m_y -= 1;
+				m_y += 1;
 			}
 			if (m_input.isKeyPressed('D')) {
 				m_x += 1;
@@ -70,7 +70,9 @@ void System::draw()
 {
 	m_window.Clear();
 
-	m_window.SetPixel(m_x, m_y, L'X', FOREGROUND_RED | FOREGROUND_INTENSITY);
+	//m_window.SetPixel(m_x, m_y, L'X', FOREGROUND_RED | FOREGROUND_INTENSITY);
+
+	drawPlayer();
 
 	m_window.Draw();
 	Sleep(33);
@@ -80,4 +82,21 @@ void System::run()
 {
 	initGame();
 	gameLoop();
+}
+
+
+void System::drawPlayer()
+{
+	wchar_t* shape = m_player.getPlayerShape();
+	short height = m_player.getHeight();
+	short width = m_player.getWidth();
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			wchar_t ch = shape[i * width + j];
+			m_window.SetPixel(m_x + j, m_y + i, ch, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		}
+	}
 }

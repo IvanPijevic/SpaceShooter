@@ -21,6 +21,4 @@ struct Size
 	}
 };
 
-
-
 #endif  //DATASTRUCTURES_H
