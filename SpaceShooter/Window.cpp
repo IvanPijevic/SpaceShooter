@@ -35,13 +35,13 @@ void Window::Clear()
 	std::fill(m_buffer.begin(), m_buffer.end(), CHAR_INFO{ {L' '}, FOREGROUND_INTENSITY });
 }
 
-void Window::SetPixel(short x, short y, wchar_t ch, WORD attributes)
-{
-	if (x >= 0 && x < m_windowSize.x && y >= 0 && y < m_windowSize.y) 
-	{
-		m_buffer[y * m_windowSize.x + x] = CHAR_INFO{ {ch}, attributes };
-	}
-}
+//void Window::SetPixel(short x, short y, wchar_t ch, WORD attributes)
+//{
+//	if (x >= 0 && x < m_windowSize.x && y >= 0 && y < m_windowSize.y) 
+//	{
+//		m_buffer[y * m_windowSize.x + x] = CHAR_INFO{ {ch}, attributes };
+//	}
+//}
 
 void Window::Draw()
 {

@@ -144,6 +144,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="SpaceShooter.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Window.h" />

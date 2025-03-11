@@ -4,14 +4,14 @@ System::System() :
 	m_gameState(GameState::PLAY),
 	m_window(128, 64),  // == 1024x768
 	m_x(58),
-	m_y(27)
+	m_y(27),
+	m_player(58, 27)
 {
 
 }
 
 void System::initGame()
 {
-	
 }
 
 void System::processInput()
@@ -72,7 +72,7 @@ void System::draw()
 
 	//m_window.SetPixel(m_x, m_y, L'X', FOREGROUND_RED | FOREGROUND_INTENSITY);
 
-	drawPlayer();
+	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
 
 	m_window.Draw();
 	Sleep(33);
@@ -82,21 +82,4 @@ void System::run()
 {
 	initGame();
 	gameLoop();
-}
-
-
-void System::drawPlayer()
-{
-	wchar_t* shape = m_player.getPlayerShape();
-	short height = m_player.getHeight();
-	short width = m_player.getWidth();
-
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			wchar_t ch = shape[i * width + j];
-			m_window.SetPixel(m_x + j, m_y + i, ch, FOREGROUND_RED | FOREGROUND_INTENSITY);
-		}
-	}
 }

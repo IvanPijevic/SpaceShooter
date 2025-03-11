@@ -20,8 +20,8 @@ public:
 
 
 private:
-	Position m_pos;
-	Direction m_dir;
+	Position m_position;
+	Direction m_direction;
 
 	float m_speed;
 	int m_lifeTime;

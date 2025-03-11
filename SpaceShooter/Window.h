@@ -15,7 +15,11 @@ public:
 
 	void Clear();
 	void Draw();
-	void SetPixel(short x, short y, wchar_t ch, WORD attributes = FOREGROUND_INTENSITY);
+	//void SetPixel(short x, short y, wchar_t ch, WORD attributes = FOREGROUND_INTENSITY);
+
+	//Get
+	Size getWindowSize() const { return m_windowSize; }
+	std::vector<CHAR_INFO>& getBuffer() { return m_buffer; }
 
 private:
 	HANDLE m_frontBuffer; 

@@ -1,16 +1,18 @@
-#pragma once
-
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <iostream>
 
-class Player
+#include "Agent.h"
+
+class Player : public Agent
 {
 public:
-	Player();
+	Player(short positionX, short positionY);
 	~Player();
-
+	
 	/*void init(short positionX, short positionY, wchar_t ch, WORD attributes);*/
-	void draw(short x, short y);
+	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 
 	wchar_t* getPlayerShape() { return &m_playerShape[0][0]; }
 	short getHeight() { return m_height; }
@@ -21,5 +23,11 @@ private:
 	static constexpr short m_height = 2;
 
 	wchar_t m_playerShape[m_height][m_width];
+
+	Draw m_drawPixel;
+	
+	short m_posX;
+	short m_posY;
 };
 
+#endif  //PLAYER_H

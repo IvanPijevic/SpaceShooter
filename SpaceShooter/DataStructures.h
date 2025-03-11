@@ -1,6 +1,8 @@
 #ifndef DATASTRUCTURES_H
 #define DATASTRUCTURES_H
 
+#include <windows.h>
+
 struct Position
 {
 	Position() : x(0), y(0) {}
@@ -24,7 +26,7 @@ struct Size
 	short x;
 	short y;
 
-	operator COORD() const 
+	operator COORD() const
 	{
 		return { x, y };
 	}

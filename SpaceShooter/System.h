@@ -6,6 +6,7 @@
 
 #include "Window.h"
 #include "Input.h"
+#include "Agent.h"
 #include "Player.h"
 
 enum class GameState
@@ -24,8 +25,8 @@ public:
 	void draw();
 	void run();
 
-public:
-	void drawPlayer();
+//public:
+//	void drawPlayer();
 
 private:
 	GameState m_gameState;
