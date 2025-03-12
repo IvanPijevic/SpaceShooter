@@ -3,15 +3,13 @@
 System::System() :
 	m_gameState(GameState::PLAY),
 	m_window(128, 64),  // == 1024x768
-	m_x(58),
-	m_y(27),
-	m_player(58, 27)
-{
-
-}
+	m_player(Position(58, 27))
+{}
 
 void System::initGame()
 {
+	m_playerPosition = m_player.getPosition();
+
 }
 
 void System::processInput()
@@ -40,17 +38,25 @@ void System::processInput()
 				}
 			}
 
-			if (m_input.isKeyPressed('W')) {
-				m_y -= 1;
+			if (m_input.isKeyPressed('W')) 
+			{
+				m_playerPosition.y -= 1;
+				m_player.setPosition(m_playerPosition);
 			}
-			if (m_input.isKeyPressed('A')) {
-				m_x -= 1;
+			if (m_input.isKeyPressed('A')) 
+			{
+				m_playerPosition.x -= 1;
+				m_player.setPosition(m_playerPosition);
 			}
-			if (m_input.isKeyPressed('S')) {
-				m_y += 1;
+			if (m_input.isKeyPressed('S')) 
+			{
+				m_playerPosition.y += 1;
+				m_player.setPosition(m_playerPosition);
 			}
-			if (m_input.isKeyPressed('D')) {
-				m_x += 1;
+			if (m_input.isKeyPressed('D')) 
+			{
+				m_playerPosition.x += 1;
+				m_player.setPosition(m_playerPosition);
 			}
 		}
 	

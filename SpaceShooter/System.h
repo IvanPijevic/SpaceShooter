@@ -32,10 +32,10 @@ private:
 	GameState m_gameState;
 	Window m_window;
 	Input m_input;
-	Player m_player;
 
-	short m_x;
-	short m_y;
+	Player m_player;
+	Position m_playerPosition;
+
 };
 
 #endif  //SYSTEM_H
