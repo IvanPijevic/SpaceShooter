@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "Input.h"
 #include "DataStructures.h"
 #include "Agent.h"
 
@@ -33,7 +34,7 @@ private:
 	wchar_t m_playerShape[m_height][m_width];
 
 	Draw m_drawPixel;
-
+	Input m_input;
 };
 
 #endif  //PLAYER_H
