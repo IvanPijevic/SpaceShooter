@@ -3,16 +3,23 @@
 System::System() :
 	m_gameState(GameState::PLAY),
 	m_window(128, 64),  // == 1024x768
-	m_player(Position(58, 27))
-{}
+	m_player(Position(58, 27)),
+	m_desiredFPS(60),
+	m_maxDeltaTime(1.0f),
+	m_maxPhysicsSteps(6)
+
+{
+}
 
 void System::initGame()
 {
+
 	m_playerPosition = m_player.getPosition();
+
 
 }
 
-void System::processInput()
+void System::processInput(float deltaTime)
 {
 	HANDLE hInput = GetStdHandle(STD_INPUT_HANDLE);
 	INPUT_RECORD inputRecord;
@@ -64,9 +71,26 @@ void System::processInput()
 
 void System::gameLoop()
 {
+	Timing timer(m_desiredFPS);
+
 	while (m_gameState != GameState::QUIT)
 	{
-		processInput();
+		float totalDeltaTime = timer.getDeltaTime();
+
+		int i = 0;
+		while (totalDeltaTime > 0.0f && i < m_maxPhysicsSteps)
+		{
+			float deltaTime = std::min(totalDeltaTime, m_maxDeltaTime);
+
+			//Update game
+			processInput(deltaTime);
+			
+
+
+			totalDeltaTime -= deltaTime;
+			i++;
+		}
+
 		draw();
 	}
 

@@ -2,12 +2,15 @@
 #define SYSTEM_H
 
 #include <iostream>
+#define NOMINMAX
 #include <Windows.h>
+#include <algorithm>
 
 #include "Window.h"
 #include "Input.h"
 #include "Agent.h"
 #include "Player.h"
+#include "Timing.h"
 
 enum class GameState
 {
@@ -20,7 +23,7 @@ public:
 	System();
 
 	void initGame();
-	void processInput();
+	void processInput(float deltaTime);
 	void gameLoop();
 	void draw();
 	void run();
@@ -35,6 +38,11 @@ private:
 
 	Player m_player;
 	Position m_playerPosition;
+
+	//Timing
+	const int m_desiredFPS;
+	const float m_maxDeltaTime;
+	const int m_maxPhysicsSteps;
 
 };
 

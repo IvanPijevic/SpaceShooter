@@ -18,4 +18,28 @@ private:
 
 };
 
+class FpsLimiter
+{
+public:
+	FpsLimiter();
+
+	void init(float maxFPS);
+
+	void begin();
+	uint32_t getMsSinceStart();
+	float end();
+
+	void setMaxFPS(float maxFPS);
+
+private:
+	void calculateFPS();
+
+private:
+	float m_fps;
+	float m_maxFPS;
+	float m_frameTime;
+	std::chrono::high_resolution_clock::time_point m_programStartTime;
+
+};
+
 #endif  //TIMING_H
