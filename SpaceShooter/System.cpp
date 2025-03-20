@@ -6,17 +6,18 @@ System::System() :
 	m_player(Position(58, 27)),
 	m_desiredFPS(60),
 	m_maxDeltaTime(1.0f),
-	m_maxPhysicsSteps(6)
+	m_maxPhysicsSteps(6),
+	m_maxFPS(60.0f),
+	m_time(0.0f)
 
 {
 }
 
 void System::initGame()
 {
+	m_fpsLimiter.setMaxFPS(m_maxFPS);
 
 	m_playerPosition = m_player.getPosition();
-
-
 }
 
 void System::processInput(float deltaTime)
@@ -45,21 +46,21 @@ void System::processInput(float deltaTime)
 				}
 			}
 
-			if (m_input.isKeyPressed('W')) 
-			{
-				m_playerPosition.y -= 1;
-				m_player.setPosition(m_playerPosition);
-			}
+			//if (m_input.isKeyPressed('W')) 
+			//{
+			//	m_playerPosition.y -= 1;
+			//	m_player.setPosition(m_playerPosition);
+			//}
 			if (m_input.isKeyPressed('A')) 
 			{
 				m_playerPosition.x -= 1;
 				m_player.setPosition(m_playerPosition);
 			}
-			if (m_input.isKeyPressed('S')) 
-			{
-				m_playerPosition.y += 1;
-				m_player.setPosition(m_playerPosition);
-			}
+			//if (m_input.isKeyPressed('S')) 
+			//{
+			//	m_playerPosition.y += 1;
+			//	m_player.setPosition(m_playerPosition);
+			//}
 			if (m_input.isKeyPressed('D')) 
 			{
 				m_playerPosition.x += 1;
@@ -75,6 +76,8 @@ void System::gameLoop()
 
 	while (m_gameState != GameState::QUIT)
 	{
+		m_fpsLimiter.begin();
+
 		float totalDeltaTime = timer.getDeltaTime();
 
 		int i = 0;
@@ -91,7 +94,17 @@ void System::gameLoop()
 			i++;
 		}
 
-		draw();
+	//static int frameCounter = 0;
+	//frameCounter++;
+	//if (frameCounter == 10)
+	//{
+	//	std::cout << m_fps;
+	//	frameCounter = 0;
+	//}
+
+	draw();
+
+	m_fps = m_fpsLimiter.end();
 	}
 
 }
@@ -105,7 +118,7 @@ void System::draw()
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
 
 	m_window.Draw();
-	Sleep(33);
+	/*Sleep(33);*/
 }
 
 void System::run()

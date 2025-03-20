@@ -2,6 +2,7 @@
 #define TIMING_H
 
 #include <chrono>
+#include <Windows.h>
 
 class Timing
 {
@@ -26,19 +27,22 @@ public:
 	void init(float maxFPS);
 
 	void begin();
-	uint32_t getMsSinceStart();
+	/*float getMsSinceStart();*/
 	float end();
 
 	void setMaxFPS(float maxFPS);
 
 private:
 	void calculateFPS();
+	float epochTime();
 
 private:
 	float m_fps;
 	float m_maxFPS;
+
+	//Frame time start/end
+	float m_startTime;
 	float m_frameTime;
-	std::chrono::high_resolution_clock::time_point m_programStartTime;
 
 };
 

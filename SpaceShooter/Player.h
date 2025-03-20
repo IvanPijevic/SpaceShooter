@@ -14,7 +14,7 @@ public:
 	~Player();
 	
 	/*void init(short positionX, short positionY, wchar_t ch, WORD attributes);*/
-	void update();
+	void update(Input& input, short screenWidth, short screenHeight, float deltaTime);
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 
 	wchar_t* getPlayerShape() { return &m_playerShape[0][0]; }

@@ -8,7 +8,7 @@ Player::Player(Position pos) :
 Player::~Player()
 { }
 
-void Player::update()
+void Player::update(Input& input, short screenWidth, short screenHeight, float deltaTime)
 {
 
 }

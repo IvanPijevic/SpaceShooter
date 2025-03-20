@@ -35,6 +35,7 @@ private:
 	GameState m_gameState;
 	Window m_window;
 	Input m_input;
+	FpsLimiter m_fpsLimiter;
 
 	Player m_player;
 	Position m_playerPosition;
@@ -43,6 +44,11 @@ private:
 	const int m_desiredFPS;
 	const float m_maxDeltaTime;
 	const int m_maxPhysicsSteps;
+
+	//fps
+	float m_maxFPS;
+	float m_fps;
+	float m_time;
 
 };
 
