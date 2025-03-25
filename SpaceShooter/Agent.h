@@ -7,7 +7,7 @@
 class Agent
 {
 public:
-	Agent(Position pos);
+	Agent();
 	virtual ~Agent();
 
 	void init();
@@ -17,6 +17,7 @@ protected:
 	int m_hp;
 	int m_shield;
 	int m_energy;
+
 
 	Position m_position;
 };

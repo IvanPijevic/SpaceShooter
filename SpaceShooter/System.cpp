@@ -3,7 +3,6 @@
 System::System() :
 	m_gameState(GameState::PLAY),
 	m_window(128, 64),  // == 1024x768
-	m_player(Position(58, 27)),
 	m_desiredFPS(60),
 	m_maxDeltaTime(1.0f),
 	m_maxPhysicsSteps(6),
@@ -16,8 +15,7 @@ System::System() :
 void System::initGame()
 {
 	m_fpsLimiter.setMaxFPS(m_maxFPS);
-
-	m_playerPosition = m_player.getPosition();
+	m_player.init(Position(58, 27), 10.0f, &m_input);
 }
 
 void System::processInput(float deltaTime)
@@ -45,27 +43,6 @@ void System::processInput(float deltaTime)
 					m_gameState = GameState::QUIT;
 				}
 			}
-
-			//if (m_input.isKeyPressed('W')) 
-			//{
-			//	m_playerPosition.y -= 1;
-			//	m_player.setPosition(m_playerPosition);
-			//}
-			if (m_input.isKeyPressed('A')) 
-			{
-				m_playerPosition.x -= 1;
-				m_player.setPosition(m_playerPosition);
-			}
-			//if (m_input.isKeyPressed('S')) 
-			//{
-			//	m_playerPosition.y += 1;
-			//	m_player.setPosition(m_playerPosition);
-			//}
-			if (m_input.isKeyPressed('D')) 
-			{
-				m_playerPosition.x += 1;
-				m_player.setPosition(m_playerPosition);
-			}
 		}
 	
 }
@@ -88,7 +65,7 @@ void System::gameLoop()
 			//Update game
 			processInput(deltaTime);
 			
-
+			m_player.update(m_window.getWindowSize().width, m_window.getWindowSize().height, deltaTime);
 
 			totalDeltaTime -= deltaTime;
 			i++;

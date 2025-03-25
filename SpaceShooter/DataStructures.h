@@ -22,13 +22,13 @@ struct Direction
 
 struct Size
 {
-	Size(short X, short Y) : x(X), y(Y) {}
-	short x;
-	short y;
+	Size(short Width, short Height) : width(Width), height(Height) {}
+	short width;
+	short height;
 
 	operator COORD() const
 	{
-		return { x, y };
+		return { width, height };
 	}
 };
 
