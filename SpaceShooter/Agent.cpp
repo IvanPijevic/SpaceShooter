@@ -1,7 +1,6 @@
 #include "Agent.h"
 
-Agent::Agent(Position pos) :
-	m_position(pos)
+Agent::Agent()
 { }
 
 Agent::~Agent()

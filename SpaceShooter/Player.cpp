@@ -1,12 +1,18 @@
 #include "Player.h"
 
-Player::Player(Position pos) :
+Player::Player() :
 	m_playerShape{ {L' ', L'A', L' '}, {L'T', L'X', L'T'} },
-	Agent(Position(58,27))
+	m_startPosition(60, 30)
 {}
 
 Player::~Player()
 { }
+
+void Player::init(Position position, float speed)
+{
+	m_position = position;
+	m_speed = speed;
+}
 
 void Player::update(Input& input, short screenWidth, short screenHeight, float deltaTime)
 {

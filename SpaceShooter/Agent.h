@@ -7,7 +7,7 @@
 class Agent
 {
 public:
-	Agent(Position pos);
+	Agent();
 	virtual ~Agent();
 
 	void init();

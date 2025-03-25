@@ -46,7 +46,7 @@ void Window::Clear()
 void Window::Draw()
 {
 	// Write entire buffer at once
-	SMALL_RECT writeRegion = { 0, 0, m_windowSize.x - 1, m_windowSize.y - 1 };
+	SMALL_RECT writeRegion = { 0, 0, m_windowSize.width - 1, m_windowSize.height - 1 };
 	WriteConsoleOutputA(m_backBuffer, m_buffer.data(), m_windowSize, { 0, 0 }, &writeRegion);
 
 	// Swap buffers

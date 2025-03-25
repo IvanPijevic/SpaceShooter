@@ -10,10 +10,10 @@
 class Player : public Agent
 {
 public:
-	Player(Position pos);
+	Player();
 	~Player();
 	
-	/*void init(short positionX, short positionY, wchar_t ch, WORD attributes);*/
+	void init(Position position, float m_speed);
 	void update(Input& input, short screenWidth, short screenHeight, float deltaTime);
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 
@@ -23,6 +23,7 @@ public:
 
 	//Getter
 	Position getPosition() { return m_position; }
+	Position getStartPosition() { return m_startPosition; }
 
 	//Setter
 	void setPosition(Position pos) { m_position = pos; }
@@ -31,10 +32,13 @@ private:
 	static constexpr short m_width = 3;
 	static constexpr short m_height = 2;
 
+	float m_speed;
+
 	wchar_t m_playerShape[m_height][m_width];
 
 	Draw m_drawPixel;
-	Input m_input;
+
+	Position m_startPosition;
 };
 
 #endif  //PLAYER_H
