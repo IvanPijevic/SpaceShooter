@@ -3,18 +3,41 @@
 
 #include <windows.h>
 
-struct Position
-{
-	Position() : x(0), y(0) {}
-	Position(short X, short Y) : x(X), y(Y) {}
-	short x;
-	short y;
-};
-
 struct Direction
 {
 	Direction() : x(0), y(0) {}
 	Direction(short X, short Y) : x(X), y(Y) {}
+
+	Direction operator*(float num) const
+	{
+		return Direction(static_cast<short>(x * num), static_cast<short>(y * num));
+	}
+
+	short x;
+	short y;
+};
+
+struct Position
+{
+	Position() : x(0), y(0) {}
+	Position(short X, short Y) : x(X), y(Y) {}
+
+	Position operator*(const Direction& direction) const
+	{
+		return Position(x * direction.x, y * direction.y);
+	}
+
+	Position operator+(const Direction& direction) const
+	{
+		return Position(x + direction.x, y + direction.y);
+	}
+
+	Position& operator+=(const Direction& direction)
+	{
+		x += direction.x;
+		y += direction.y;
+		return *this;
+	}
 
 	short x;
 	short y;

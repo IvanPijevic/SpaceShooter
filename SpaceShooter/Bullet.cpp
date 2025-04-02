@@ -1,40 +1,24 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Position pos, Direction dir, float speed, int lifeTime, int damage) :
-	m_position(pos),
-	m_direction(dir),
+Bullet::Bullet(Position position, Direction direction, float damage, float speed) :
+	m_position(position),
+	m_direction(direction),
+	m_damage(damage),
 	m_speed(speed),
-	m_lifeTime(lifeTime),
-	m_damage(damage)
+	m_laser(L'!')
 {
+
 }
 
 Bullet::~Bullet()
+{ }
+
+void Bullet::update()
 {
+	m_position += m_direction * m_speed;
 }
 
-//void Bullet::update(int screenHeight, float deltaTime)
-//{
-//	m_position += m_direction * m_speed * deltaTime;
-//	m_lifeTime--;
-//
-//	if (screenHeight / 2 < m_position.y)
-//	{
-//		m_lifeTime = 0;
-//	}
-//}
-//
-//bool Bullet::colideWithAgent(Agent* agent)
-//{
-//	Position enemyPosition = agent->getPosition();
-//	int enemyWidth = agent->getWidth();
-//	int enemyHeight = agent->getHeigh();
-//
-//	if (m_position.x > enemyPosition.x && m_position.x < enemyPosition.x + enemyWidth
-//		&& m_position.y > enemyPosition.y && m_position.y < enemyPosition.y + enemyHeight)
-//	{
-//		return true;
-//	}
-//
-//	return false;
-//}
+void Bullet::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
+{
+	m_draw.drawPixel(m_position.x, m_position.y, m_laser, FOREGROUND_RED | FOREGROUND_INTENSITY, windowSize, buffer);
+}

@@ -2,7 +2,7 @@
 
 System::System() :
 	m_gameState(GameState::PLAY),
-	m_window(128, 64),  // == 1024x768
+	m_window(128, 64),  //width / height 
 	m_desiredFPS(60),
 	m_maxDeltaTime(1.0f),
 	m_maxPhysicsSteps(6),
@@ -15,7 +15,8 @@ System::System() :
 void System::initGame()
 {
 	m_fpsLimiter.setMaxFPS(m_maxFPS);
-
+	m_player.init(m_player.getStartPosition(), 1.0f);
+	m_player.addWeapon(new Weapon("Basic laser", 10, 1, 10.0f, 1.0f));
 }
 
 void System::processInput(float deltaTime)
@@ -43,19 +44,6 @@ void System::processInput(float deltaTime)
 					m_gameState = GameState::QUIT;
 				}
 			}
-
-			
-			if (m_input.isKeyPressed('A')) 
-			{
-				m_playerPosition.x -= 1;
-				m_player.setPosition(m_playerPosition);
-			}
-		
-			if (m_input.isKeyPressed('D')) 
-			{
-				m_playerPosition.x += 1;
-				m_player.setPosition(m_playerPosition);
-			}
 		}
 	
 }
@@ -77,8 +65,9 @@ void System::gameLoop()
 
 			//Update game
 			processInput(deltaTime);
-			m_player.update(m_input, m_window.getWindowSize().width, m_window.getWindowSize().height, deltaTime);
+			m_player.update(m_input, m_window.getWindowSize().width, m_window.getWindowSize().height, deltaTime, m_bullets);
 
+			updateBullets();
 
 			totalDeltaTime -= deltaTime;
 			i++;
@@ -103,16 +92,26 @@ void System::draw()
 {
 	m_window.Clear();
 
-	//m_window.SetPixel(m_x, m_y, L'X', FOREGROUND_RED | FOREGROUND_INTENSITY);
-
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
+	
+	for (int i = 0; i < m_bullets.size(); i++)
+	{
+		m_bullets[i].draw(m_window.getWindowSize(), m_window.getBuffer());
+	}
 
 	m_window.Draw();
-	/*Sleep(33);*/
 }
 
 void System::run()
 {
 	initGame();
 	gameLoop();
+}
+
+void System::updateBullets()
+{
+	for (int i = 0; i < m_bullets.size(); i++)
+	{
+		m_bullets[i].update();
+	}
 }

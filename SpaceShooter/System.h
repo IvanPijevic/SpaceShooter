@@ -11,6 +11,7 @@
 #include "Agent.h"
 #include "Player.h"
 #include "Timing.h"
+#include "Bullet.h"
 
 enum class GameState
 {
@@ -27,6 +28,8 @@ public:
 	void gameLoop();
 	void draw();
 	void run();
+
+	void updateBullets();
 
 //public:
 //	void drawPlayer();
@@ -50,6 +53,7 @@ private:
 	float m_fps;
 	float m_time;
 
+	std::vector<Bullet> m_bullets;  //On screen
 };
 
 #endif  //SYSTEM_H

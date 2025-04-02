@@ -13,7 +13,7 @@ Window::Window(short width, short height) :
 	SetConsoleScreenBufferSize(m_backBuffer, m_windowSize);
 
 	//Window size == buffer size
-	SMALL_RECT windowSize = { 0, 0, m_width - 1, m_height - 1 };
+	SMALL_RECT windowSize = { 0, 0, m_windowSize.width - 1, m_windowSize.height - 1 };
 	SetConsoleWindowInfo(m_frontBuffer, TRUE, &windowSize);
 	SetConsoleWindowInfo(m_backBuffer, TRUE, &windowSize);
 

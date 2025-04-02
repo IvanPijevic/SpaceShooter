@@ -13,6 +13,7 @@ public:
 	void init();
 	virtual void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) = 0;
 
+
 protected:
 	int m_hp;
 	int m_shield;
