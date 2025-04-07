@@ -27,6 +27,16 @@ void Player::init(Position position, float speed)
 
 void Player::update(Input& input, short screenWidth, short screenHeight, float deltaTime, std::vector<Bullet>& bullets)
 {
+	if (input.isKeyPressed('W'))
+	{
+		m_position.y -= 1;
+	}
+
+	if (input.isKeyPressed('S'))
+	{
+		m_position.y += 1;
+	}
+
 	if (input.isKeyPressed('A'))
 	{
 		m_position.x -= 1;

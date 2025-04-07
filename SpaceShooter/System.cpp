@@ -16,7 +16,8 @@ void System::initGame()
 {
 	m_fpsLimiter.setMaxFPS(m_maxFPS);
 	m_player.init(m_player.getStartPosition(), 1.0f);
-	m_player.addWeapon(new Weapon("Basic laser", 10, 1, 10.0f, 1.0f));
+	m_player.addWeapon(new Weapon("Basic laser", 7, 1, 10.0f, 1.0f));
+	m_player.addWeapon(new Weapon("Basic laser", 30, 1, 10.0f, 1.0f));
 }
 
 void System::processInput(float deltaTime)
