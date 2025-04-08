@@ -1,4 +1,4 @@
-#include "Window.h"
+﻿#include "Window.h"
 
 Window::Window(short width, short height) : 
 	m_windowSize(width, height),
@@ -8,19 +8,21 @@ Window::Window(short width, short height) :
 	m_backBuffer = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, 
 												NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 
-	//Postavljanje velicine oba window buffera
-	SetConsoleScreenBufferSize(m_frontBuffer, m_windowSize);
-	SetConsoleScreenBufferSize(m_backBuffer, m_windowSize);
-
 	//Window size == buffer size
 	SMALL_RECT windowSize = { 0, 0, m_windowSize.width - 1, m_windowSize.height - 1 };
 	SetConsoleWindowInfo(m_frontBuffer, TRUE, &windowSize);
 	SetConsoleWindowInfo(m_backBuffer, TRUE, &windowSize);
 
+	//Postavljanje velicine oba window buffera
+	SetConsoleScreenBufferSize(m_frontBuffer, m_windowSize);
+	SetConsoleScreenBufferSize(m_backBuffer, m_windowSize);
+
 	//Sakri mis
 	CONSOLE_CURSOR_INFO cursorInfo = { 1, FALSE };
 	SetConsoleCursorInfo(m_frontBuffer, &cursorInfo);
 	SetConsoleCursorInfo(m_backBuffer, &cursorInfo);
+
+	SetConsoleActiveScreenBuffer(m_frontBuffer);
 
 }
 
@@ -45,7 +47,8 @@ void Window::Clear()
 
 void Window::Draw()
 {
-	// Write entire buffer at once
+
+	//Write entire buffer at once
 	SMALL_RECT writeRegion = { 0, 0, m_windowSize.width - 1, m_windowSize.height - 1 };
 	WriteConsoleOutputA(m_backBuffer, m_buffer.data(), m_windowSize, { 0, 0 }, &writeRegion);
 

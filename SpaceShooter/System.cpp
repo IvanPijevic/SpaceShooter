@@ -2,7 +2,7 @@
 
 System::System() :
 	m_gameState(GameState::PLAY),
-	m_window(128, 64),  //width / height 
+	m_window(128, 32),  //width / height 
 	m_desiredFPS(60),
 	m_maxDeltaTime(1.0f),
 	m_maxPhysicsSteps(6),
