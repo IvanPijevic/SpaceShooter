@@ -24,12 +24,15 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
 
+    - name: Clean
+      run: msbuild /t:Clean /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} ${{ env.SOLUTION_FILE_PATH }}
+
     - name: Build
       working-directory: ${{ env.GITHUB_WORKSPACE }}
-      run: msbuild /m /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} ${{ env.SOLUTION_FILE_PATH }}
+      run: msbuild /m /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:PlatformToolset=v143 /p:LinkTimeCodeGeneration=0 /v:diag ${{ env.SOLUTION_FILE_PATH }}
 
     - name: Setup VSTest and add to PATH
       uses: darenm/Setup-VSTest@v1
 
     - name: Run VSTest
-      run: vstest.console.exe /Platform:${{ matrix.platform }} /Enablecodecoverage .\\${{ matrix.platform }}\\${{ matrix.configuration }}\\test.dll
+      run: vstest.console.exe /Platform:${{ matrix.platform }} /Enablecodecoverage .\\${{ matrix.platform }}\\${{ matrix.configuration }}\\UnitTest.dll
