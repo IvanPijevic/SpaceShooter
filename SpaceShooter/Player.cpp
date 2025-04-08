@@ -2,7 +2,7 @@
 
 Player::Player() :
 	m_playerShape{ {L' ', L'A', L' '}, {L'T', L'X', L'T'} },
-	m_startPosition(60, 60),
+	m_startPosition(40, 28),
 	m_currentGunIndex(-1)  //No weapon
 {}
 
@@ -29,22 +29,22 @@ void Player::update(Input& input, short screenWidth, short screenHeight, float d
 {
 	if (input.isKeyPressed('W'))
 	{
-		m_position.y -= 1;
+		m_position.y -= 500 * deltaTime;
 	}
 
 	if (input.isKeyPressed('S'))
 	{
-		m_position.y += 1;
+		m_position.y += 500 * deltaTime;
 	}
 
 	if (input.isKeyPressed('A'))
 	{
-		m_position.x -= 1;
+		m_position.x -= 1000 * deltaTime;
 	}
 
 	if (input.isKeyPressed('D'))
 	{
-		m_position.x += 1;
+		m_position.x += 1000 * deltaTime;
 	}
 
 	//TODO weapon change

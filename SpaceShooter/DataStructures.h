@@ -20,7 +20,7 @@ struct Direction
 struct Position
 {
 	Position() : x(0), y(0) {}
-	Position(short X, short Y) : x(X), y(Y) {}
+	Position(float X, float Y) : x(X), y(Y) {}
 
 	Position operator*(const Direction& direction) const
 	{
@@ -39,8 +39,8 @@ struct Position
 		return *this;
 	}
 
-	short x;
-	short y;
+	float x;
+	float y;
 };
 
 struct Size
