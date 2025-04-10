@@ -55,4 +55,22 @@ struct Size
 	}
 };
 
+//Enemy spec
+enum class TRAJECTORY
+{
+	COS, VERTICAL, DOUBLE_VERTICAL, DIAGONAL
+};
+
+enum class ENEMY_TYPE
+{
+	DRONE, BOSS
+};
+
+struct WaveData
+{
+	int numberOfShips;
+	ENEMY_TYPE enemyType;
+	TRAJECTORY trajectory;
+};
+
 #endif  //DATASTRUCTURES_H

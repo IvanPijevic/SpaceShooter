@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player() :
-	m_playerShape{ {L' ', L'A', L' '}, {L'T', L'X', L'T'} },
+Player::Player() :/*
+	m_shipShape{ {L' ', L'A', L' '}, {L'T', L'X', L'T'} },*/
 	m_startPosition(40, 28),
 	m_currentGunIndex(-1)  //No weapon
 {}
@@ -79,7 +79,7 @@ void Player::update(Input& input, short screenWidth, short screenHeight, float d
 
 void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
 {
-	wchar_t* shape = &m_playerShape[0][0];
+	wchar_t* shape = &m_shipShape[0][0];
 
 	for (int i = 0; i < m_height; i++)
 	{

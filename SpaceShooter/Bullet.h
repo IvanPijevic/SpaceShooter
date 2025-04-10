@@ -6,7 +6,6 @@
 #include "DataStructures.h"
 #include "Draw.h"
 
-class Agent;
 
 class Bullet
 {

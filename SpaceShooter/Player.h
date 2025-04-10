@@ -9,7 +9,7 @@
 #include "Bullet.h"
 #include "Weapon.h"
 
-class Player : public Agent
+class Player : public Agent<3,2>
 {
 public:
 	Player();
@@ -22,7 +22,7 @@ public:
 
 	//TODO check is player in window borders
 
-	wchar_t* getPlayerShape() { return &m_playerShape[0][0]; }
+	wchar_t* getPlayerShape() { return &m_shipShape[0][0]; }
 	short getHeight() { return m_height; }
 	short getWidth() { return m_width; }
 
@@ -36,14 +36,9 @@ public:
 private:
 	std::vector<Weapon*> m_weapons;
 
-	static constexpr short m_width = 3;
-	static constexpr short m_height = 2;
-
 	float m_speed;
 
 	int m_currentGunIndex;
-
-	wchar_t m_playerShape[m_height][m_width];
 
 	Draw m_draw;
 
