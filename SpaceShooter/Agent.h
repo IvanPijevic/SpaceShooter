@@ -38,8 +38,10 @@ Agent<width, height>::Agent()
 	m_energy = 50;
 	m_position = { 0, 0 };
 
-	for (short i = 0; i < m_height; ++i) {
-		for (short j = 0; j < m_width; ++j) {
+	for (short i = 0; i < m_height; ++i) 
+	{
+		for (short j = 0; j < m_width; ++j) 
+		{
 			m_shipShape[i][j] = L' '; // Default shape
 		}
 	}
@@ -48,7 +50,7 @@ Agent<width, height>::Agent()
 template <short width, short height>
 Agent<width, height>::~Agent()
 {
-
+	
 }
 
 template <short width, short height>

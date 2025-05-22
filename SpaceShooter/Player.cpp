@@ -1,10 +1,16 @@
 #include "Player.h"
 
-Player::Player() :/*
-	m_shipShape{ {L' ', L'A', L' '}, {L'T', L'X', L'T'} },*/
+Player::Player() :
 	m_startPosition(40, 28),
 	m_currentGunIndex(-1)  //No weapon
-{}
+{
+	m_shipShape[0][0] = L' ';
+	m_shipShape[0][1] = L'A';
+	m_shipShape[0][2] = L' ';
+	m_shipShape[1][0] = L'T';
+	m_shipShape[1][1] = L'X';
+	m_shipShape[1][2] = L'T';
+}
 
 Player::~Player()
 { }
@@ -89,5 +95,26 @@ void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
 			m_draw.drawPixel(m_position.x + j, m_position.y + i, ch, FOREGROUND_RED | FOREGROUND_INTENSITY,
 				windowSize, buffer);
 		}
+	}
+}
+
+void Player::limitToScreen(short screenWidth, short screenHeight)
+{
+	if (m_position.x > screenWidth - 13)
+	{
+		m_position.x = screenWidth - 13;
+	}
+	if (m_position.x < 1)
+	{
+		m_position.x = 1;
+	}
+
+	if (m_position.y > screenHeight - 5)
+	{
+		m_position.y = screenHeight - 5;
+	}
+	if (m_position.y < 5)
+	{
+		m_position.y = 5;
 	}
 }

@@ -21,6 +21,9 @@ public:
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 
 	//TODO check is player in window borders
+	//Logic
+	void limitToScreen(short screenWidth, short screenHeight);
+
 
 	wchar_t* getPlayerShape() { return &m_shipShape[0][0]; }
 	short getHeight() { return m_height; }
@@ -34,6 +37,7 @@ public:
 	void setPosition(Position pos) { m_position = pos; }
 
 private:
+
 	std::vector<Weapon*> m_weapons;
 
 	float m_speed;

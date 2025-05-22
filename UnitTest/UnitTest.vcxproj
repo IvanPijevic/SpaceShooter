@@ -148,7 +148,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)SpaceShooter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -162,7 +162,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\SpaceShooter\Agent.cpp" />
+    <ClCompile Include="..\SpaceShooter\Bullet.cpp" />
+    <ClCompile Include="..\SpaceShooter\Draw.cpp" />
+    <ClCompile Include="..\SpaceShooter\Enemy.cpp" />
+    <ClCompile Include="..\SpaceShooter\Input.cpp" />
+    <ClCompile Include="..\SpaceShooter\Player.cpp" />
+    <ClCompile Include="..\SpaceShooter\SpaceShooter.cpp" />
+    <ClCompile Include="..\SpaceShooter\System.cpp" />
+    <ClCompile Include="..\SpaceShooter\Timing.cpp" />
+    <ClCompile Include="..\SpaceShooter\Weapon.cpp" />
+    <ClCompile Include="..\SpaceShooter\Window.cpp" />
     <ClCompile Include="UnitTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceShooter\SpaceShooter.vcxproj">
+      <Project>{f0c1943a-c38d-48cc-ba7c-f52bf04a038b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

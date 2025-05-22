@@ -66,7 +66,9 @@ void System::gameLoop()
 
 			//Update game
 			processInput(deltaTime);
+			
 			m_player.update(m_input, m_window.getWindowSize().width, m_window.getWindowSize().height, deltaTime, m_bullets);
+			m_player.limitToScreen(m_window.getWindowSize().width, m_window.getWindowSize().height);
 
 			updateBullets();
 

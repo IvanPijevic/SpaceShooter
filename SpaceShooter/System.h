@@ -41,7 +41,6 @@ private:
 	FpsLimiter m_fpsLimiter;
 
 	Player m_player;
-	Position m_playerPosition;
 
 	//Timing
 	const int m_desiredFPS;
