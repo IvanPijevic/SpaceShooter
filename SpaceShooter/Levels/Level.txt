@@ -1,0 +1,24 @@
+#
+
+#
+
+#
+NumberOfEnemyShips: 4
+TypeOfEnemyShips: DRONE
+EnemyTrajectory: LINE
+
+NumberOfEnemyShips: 2
+TypeOfEnemyShips: BATTLE_SHIP
+EnemyTrajectory: CIKCAK
+
+NumberOfEnemyShips: 1
+TypeOfEnemyShips: BATTLE_SHIP
+EnemyTrajectory: LINE
+
+NumberOfEnemyShips: 3
+TypeOfEnemyShips: DRONE
+EnemyTrajectory: DOUBLE_LINE
+
+NumberOfEnemyShips: 2
+TypeOfEnemyShips: DRONE
+EnemyTrajectory: LINE

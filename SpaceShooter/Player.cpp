@@ -1,120 +1,151 @@
 #include "Player.h"
 
-Player::Player() :
-	m_startPosition(40, 28),
-	m_currentGunIndex(-1)  //No weapon
+Player::Player() : 
+	Agent(2,3),
+	m_startPosition(4, 13 /*28*/),
+	m_currentGunIndex(-1),  //No weapon
+	m_speed(10.0f),  //orginalno 500 i 1000
+	m_screenWidth(0),
+	m_screenHeight(0),
+	m_input(nullptr),
+	m_bullets(nullptr),
+	m_verticalSpeed(250.0f),
+	m_horizontalSpeed(500.0f)
+
 {
-	m_shipShape[0][0] = L' ';
-	m_shipShape[0][1] = L'A';
-	m_shipShape[0][2] = L' ';
-	m_shipShape[1][0] = L'T';
-	m_shipShape[1][1] = L'X';
-	m_shipShape[1][2] = L'T';
+	m_shipShape[0][0] = L'-';
+	m_shipShape[0][1] = L' ';
+	m_shipShape[1][0] = L'o';
+	m_shipShape[1][1] = L'>';
+	m_shipShape[2][0] = L'-';
+	m_shipShape[2][1] = L' ';
 }
 
 Player::~Player()
 { }
 
-void Player::addWeapon(Weapon* weapon)
+void Player::addWeapon(std::unique_ptr<Weapon> weapon)
 {
-	m_weapons.push_back(weapon);
+	m_weapons.push_back(std::move(weapon));
 
-	if (m_currentGunIndex == -1)
+	if (m_currentGunIndex == -1 && !m_weapons.empty()) 
 	{
 		m_currentGunIndex = 0;
 	}
 }
 
-void Player::init(Position position, float speed)
+void Player::init(Position position, float speed, short screenWidth, short screenHeight)
 {
 	m_position = position;
 	m_speed = speed;
+	m_screenWidth = screenWidth;
+	m_screenHeight = screenHeight;
 }
 
-void Player::update(Input& input, short screenWidth, short screenHeight, float deltaTime, std::vector<Bullet>& bullets)
+void Player::setInputAndBullets(Input& input, std::vector<Bullet>& bullets) 
 {
-	if (input.isKeyPressed('W'))
+	m_input = &input;
+	m_bullets = &bullets;
+}
+
+void Player::update(float deltaTime)
+{
+	if (!m_input || !m_bullets) return;
+
+	if (m_input->isKeyPressed('W'))
 	{
-		m_position.y -= 500 * deltaTime;
+		m_position.y -= m_speed * m_verticalSpeed * deltaTime;
 	}
 
-	if (input.isKeyPressed('S'))
+	if (m_input->isKeyPressed('S'))
 	{
-		m_position.y += 500 * deltaTime;
+		m_position.y += m_speed * m_verticalSpeed * deltaTime;
 	}
 
-	if (input.isKeyPressed('A'))
+	if (m_input->isKeyPressed('A'))
 	{
-		m_position.x -= 1000 * deltaTime;
+		m_position.x -= m_speed * m_horizontalSpeed * deltaTime;
 	}
 
-	if (input.isKeyPressed('D'))
+	if (m_input->isKeyPressed('D'))
 	{
-		m_position.x += 1000 * deltaTime;
+		m_position.x += m_speed * m_horizontalSpeed * deltaTime;
 	}
 
 	//TODO weapon change
-	if (input.isKeyPressed('Q') && m_weapons.size() >= 0)
+	if (m_input->isKeyPressed('Q') && !m_weapons.empty())
 	{
 		m_currentGunIndex = 0;
 	}
-	else if (input.isKeyPressed('E') && m_weapons.size() >= 1)
+	else if (m_input->isKeyPressed('E') && m_weapons.size() > 1)
 	{
 		m_currentGunIndex = 1;
 	}
 
+	if (m_input->isKeyPressed(VK_SPACE) && m_currentGunIndex != -1 && m_currentGunIndex < m_weapons.size())
+	{
+		Position bulletPosition = m_position;
+		bulletPosition.x += m_width;
+		bulletPosition.y += m_height / 2;
+		Direction dir = { 1, 0 };
+		m_weapons[m_currentGunIndex]->update(true, bulletPosition, dir, *m_bullets);
+	}
 
-	//if (input.isKeyPressed(VK_SPACE) && m_weapons.size() >= 0)
-	//{
-		//Default weapon
-		if (m_currentGunIndex != -1)
-		{
-			Position bulletPosition;  //max broj metaka TODO
-			bulletPosition = m_position;
-			bulletPosition.x += 1;
-			bulletPosition.y -= 1;
 
-			Direction dir = { 0, -1 };
+	limitToScreen();
 
-			m_weapons[m_currentGunIndex]->update(input.isKeyPressed(VK_SPACE), bulletPosition, dir, bullets);
-			/*m_weapons[m_weaponNumber]->update(input.isKeyPressed(VK_SPACE), bulletPosition[0], dir, *m_bullets, deltaTime);*/
-		}
-	//}
+	////if (input.isKeyPressed(VK_SPACE) && m_weapons.size() >= 0)
+	////{
+	//	//Default weapon
+	//	if (m_currentGunIndex != -1)
+	//	{
+	//		Position bulletPosition;  //max broj metaka TODO
+	//		bulletPosition = m_position;
+	//		bulletPosition.x += 2;
+	//		bulletPosition.y += 1;
+
+	//		Direction dir = { 1, 0 };
+
+	//		m_weapons[m_currentGunIndex]->update(input.isKeyPressed(VK_SPACE), bulletPosition, dir, bullets);
+	//		/*m_weapons[m_weaponNumber]->update(input.isKeyPressed(VK_SPACE), bulletPosition[0], dir, *m_bullets, deltaTime);*/
+	//	}
+	////}
 
 }
 
 void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
 {
-	wchar_t* shape = &m_shipShape[0][0];
-
-	for (int i = 0; i < m_height; i++)
+	for (int i = 0; i < m_height; i++) 
 	{
-		for (int j = 0; j < m_width; j++)
+		for (int j = 0; j < m_width; j++) 
 		{
-			wchar_t ch = shape[i * m_width + j];
-			m_draw.drawPixel(m_position.x + j, m_position.y + i, ch, FOREGROUND_RED | FOREGROUND_INTENSITY,
-				windowSize, buffer);
+			int x = static_cast<int>(m_position.x + j);
+			int y = static_cast<int>(m_position.y + i);
+			if (x >= 0 && x < windowSize.width && y >= 0 && y < windowSize.height) 
+			{
+				wchar_t ch = m_shipShape[i][j];
+				m_draw.drawPixel(x, y, ch, FOREGROUND_RED | FOREGROUND_INTENSITY, windowSize, buffer);
+			}
 		}
 	}
 }
 
-void Player::limitToScreen(short screenWidth, short screenHeight)
+void Player::limitToScreen()
 {
-	if (m_position.x > screenWidth - 13)
+	if (m_position.x > m_screenWidth - m_width) 
 	{
-		m_position.x = screenWidth - 13;
+		m_position.x = m_screenWidth - m_width;
 	}
-	if (m_position.x < 1)
+	if (m_position.x < 0) 
 	{
-		m_position.x = 1;
+		m_position.x = 0;
 	}
-
-	if (m_position.y > screenHeight - 5)
+	if (m_position.y > m_screenHeight - m_height) 
 	{
-		m_position.y = screenHeight - 5;
+		m_position.y = m_screenHeight - m_height;
 	}
-	if (m_position.y < 5)
+	if (m_position.y < 0) 
 	{
-		m_position.y = 5;
+		m_position.y = 0;
 	}
 }

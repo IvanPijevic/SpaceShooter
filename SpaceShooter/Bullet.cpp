@@ -5,7 +5,7 @@ Bullet::Bullet(Position position, Direction direction, float damage, float speed
 	m_direction(direction),
 	m_damage(damage),
 	m_speed(speed),
-	m_laser(L'!')
+	m_laser(L'-')
 {
 
 }

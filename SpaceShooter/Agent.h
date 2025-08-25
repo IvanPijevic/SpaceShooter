@@ -6,57 +6,38 @@
 
 #include <vector>
 
-template <short width, short height>
-
 class Agent
 {
 public:
-	Agent();
-	virtual ~Agent();
+	Agent(short width, short height);
+	virtual ~Agent() = default;
 
-	void init();
+	virtual void update(float deltaTime) = 0;
 	virtual void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) = 0;
+
+	bool isAlive() const { return m_hp > 0.0f; }
+	void takeDamage(float damage);
+
+	//Get/set
+	Position getPosition() const {return m_position; }
+	void setPosition(Position position) { m_position = position; }
 
 
 protected:
-	static constexpr short m_width = width;
-	static constexpr short m_height = height;
-	wchar_t m_shipShape[m_height][m_width];
+	std::vector<std::vector<wchar_t>> m_shipShape;
 
-	int m_hp;
-	int m_shield;
-	int m_energy;
+	short m_width;
+	short m_height;
+
+	float m_hp;
+	float m_shield;
+	float m_energy;
 
 	Position m_position;
+
+	static constexpr float DEFAULT_HP = 100.0f;
+	static constexpr float DEFAULT_ENERGY = 50.0f;
+
 };
-
-template <short width, short height>
-Agent<width, height>::Agent()
-{
-	m_hp = 100;
-	m_shield = 0;
-	m_energy = 50;
-	m_position = { 0, 0 };
-
-	for (short i = 0; i < m_height; ++i) 
-	{
-		for (short j = 0; j < m_width; ++j) 
-		{
-			m_shipShape[i][j] = L' '; // Default shape
-		}
-	}
-}
-
-template <short width, short height>
-Agent<width, height>::~Agent()
-{
-	
-}
-
-template <short width, short height>
-void Agent<width, height>::init()
-{
-
-}
 
 #endif  //AGENT_H

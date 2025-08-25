@@ -15,9 +15,11 @@ System::System() :
 void System::initGame()
 {
 	m_fpsLimiter.setMaxFPS(m_maxFPS);
-	m_player.init(m_player.getStartPosition(), 1.0f);
-	m_player.addWeapon(new Weapon("Basic laser", 7, 1, 10.0f, 1.0f));
-	m_player.addWeapon(new Weapon("Basic laser", 30, 1, 10.0f, 1.0f));
+	m_player.init(m_player.getStartPosition(), 1.0f, m_window.getWindowSize().width, m_window.getWindowSize().height);
+	m_player.setInputAndBullets(m_input, m_bullets);
+	m_player.addWeapon(std::make_unique<Weapon>("Basic laser", 7, 1, 10.0f, 2.0f));
+	m_player.addWeapon(std::make_unique<Weapon>("Basic laser", 30, 1, 10.0f, 1.0f));
+	m_enemy.init();
 }
 
 void System::processInput(float deltaTime)
@@ -67,9 +69,10 @@ void System::gameLoop()
 			//Update game
 			processInput(deltaTime);
 			
-			m_player.update(m_input, m_window.getWindowSize().width, m_window.getWindowSize().height, deltaTime, m_bullets);
-			m_player.limitToScreen(m_window.getWindowSize().width, m_window.getWindowSize().height);
-
+			m_player.update(deltaTime);
+			m_enemy.update(deltaTime);
+			//m_player.limitToScreen(m_window.getWindowSize().width, m_window.getWindowSize().height);
+			
 			updateBullets();
 
 			totalDeltaTime -= deltaTime;
@@ -96,7 +99,8 @@ void System::draw()
 	m_window.Clear();
 
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
-	
+	m_enemy.draw(m_window.getWindowSize(), m_window.getBuffer());
+
 	for (int i = 0; i < m_bullets.size(); i++)
 	{
 		m_bullets[i].draw(m_window.getWindowSize(), m_window.getBuffer());

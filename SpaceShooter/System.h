@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Agent.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Timing.h"
 #include "Bullet.h"
 
@@ -41,6 +42,7 @@ private:
 	FpsLimiter m_fpsLimiter;
 
 	Player m_player;
+	Enemy m_enemy{ Position{50, 15} };
 
 	//Timing
 	const int m_desiredFPS;
