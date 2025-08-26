@@ -20,6 +20,7 @@ void System::initGame()
 	m_player.addWeapon(std::make_unique<Weapon>("Basic laser", 7, 1, 10.0f, 2.0f));
 	m_player.addWeapon(std::make_unique<Weapon>("Basic laser", 30, 1, 10.0f, 1.0f));
 	m_enemy.init();
+	m_enemy.getScreenSize(m_window.getWindowSize().width, m_window.getWindowSize().height);
 }
 
 void System::processInput(float deltaTime)
@@ -100,6 +101,11 @@ void System::draw()
 
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
 	m_enemy.draw(m_window.getWindowSize(), m_window.getBuffer());
+
+	for (int i = 0; i < m_enemy.getCurrentWave(); i++)
+	{
+
+	}
 
 	for (int i = 0; i < m_bullets.size(); i++)
 	{

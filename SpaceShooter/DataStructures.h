@@ -55,6 +55,23 @@ struct Size
 	}
 };
 
+//Enemy spec
+enum class TRAJECTORY
+{
+	LINE, DOUBLE_LINE, CIKCAK
+};
+
+enum class ENEMY_TYPE
+{
+	DRONE, BATTLE_SHIP
+};
+
+struct LevelData
+{
+	int numberOfShips;
+	ENEMY_TYPE enemyType;
+	TRAJECTORY trajectory;
+};
 
 
 #endif  //DATASTRUCTURES_H

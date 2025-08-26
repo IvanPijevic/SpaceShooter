@@ -1,12 +1,14 @@
 #include "Enemy.h"
 
-Enemy::Enemy(Position position): 
+Enemy::Enemy() :
     Agent(2, 2),
-    m_direction{ -1, 0 }
+    m_direction{ -1, 0 },
+    m_screenWidth(0),
+    m_screenHeight(0),
+    m_currentWave(0),
+    m_isWaveDead(true)
 
 { 
-    setPosition(position);
-
     // Initialize simple enemy shape
     m_shipShape[0][0] = L'<';
     m_shipShape[0][1] = L'o';
@@ -73,10 +75,33 @@ void Enemy::init()
 
 }
 
+void Enemy::getScreenSize(short screenWidth, short screenHeight)
+{
+    m_screenWidth = screenWidth;
+    m_screenHeight = screenHeight;
+}
+
 void Enemy::update(float deltaTime) 
 {
-    m_position.x += m_direction.x * 5.0f * deltaTime;
-    m_position.y += m_direction.y * 5.0f * deltaTime;
+    addWaveToBuffer();
+
+    switch (m_lvlData[m_currentWave].trajectory)
+    {
+    case TRAJECTORY::LINE:
+        m_position.x += m_direction.x * 50.0f * deltaTime;
+        break;
+
+    case TRAJECTORY::DOUBLE_LINE:
+        m_position.x += m_direction.x * 50.0f * deltaTime;
+        break;
+
+    case TRAJECTORY::CIKCAK:
+
+        break;
+    }
+
+    //m_position.x += m_direction.x * 5.0f * deltaTime;
+    //m_position.y += m_direction.y * 5.0f * deltaTime;
 }
 
 void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer) 
@@ -94,4 +119,27 @@ void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
             }
         }
     }
+}
+
+void Enemy::addWaveToBuffer()
+{
+    if (m_isWaveDead)
+    {
+        m_currentWaveData[0].enemyType = m_lvlData[m_currentWave].enemyType;
+        m_currentWaveData[0].numberOfShips = m_lvlData[m_currentWave].numberOfShips;
+        m_currentWaveData[0].trajectory = m_lvlData[m_currentWave].trajectory;
+
+        m_currentWave++;
+        m_isWaveDead = false;
+    }
+}
+
+const std::vector<LevelData>& Enemy::getLevelData() const
+{
+    return m_lvlData;
+}
+
+const std::vector<LevelData>& Enemy::getCurrentWave() const
+{
+    return m_currentWaveData;
 }

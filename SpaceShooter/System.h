@@ -42,7 +42,7 @@ private:
 	FpsLimiter m_fpsLimiter;
 
 	Player m_player;
-	Enemy m_enemy{ Position{50, 15} };
+	Enemy m_enemy;
 
 	//Timing
 	const int m_desiredFPS;

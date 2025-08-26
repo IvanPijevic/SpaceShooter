@@ -11,41 +11,38 @@
 #include <Vector>
 #include <memory>
 
-//Enemy spec
-enum class TRAJECTORY
-{
-	LINE, DOUBLE_LINE, CIKCAK
-};
-
-enum class ENEMY_TYPE
-{
-	DRONE, BATTLE_SHIP
-};
-
-struct LevelData
-{
-	int numberOfShips;
-	ENEMY_TYPE enemyType;
-	TRAJECTORY trajectory;
-};
 
 class Enemy : public Agent
 {
 public:
-	Enemy(Position position);
+	Enemy();
 	~Enemy() = default;
 
 	void update(float deltaTime) override;
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 	void init();
+	void getScreenSize(short screenWidth, short screenHeight);
+
+	void addWaveToBuffer();
+
+	const std::vector<LevelData>& getLevelData() const;
+	const std::vector<LevelData>& getCurrentWave() const;
 
 private:
 	Direction m_direction;
+	Position m_position;
 	Draw m_draw;
 
 	std::unique_ptr<Level> m_level;
 
 	std::vector<LevelData> m_lvlData;
+	std::vector<LevelData> m_currentWaveData;
+
+	short m_screenWidth;
+	short m_screenHeight;
+
+	int m_currentWave;
+	bool m_isWaveDead;
 };
 
 #endif  //ENEMY_H
