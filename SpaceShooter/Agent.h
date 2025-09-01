@@ -21,6 +21,10 @@ public:
 	//Get/set
 	Position getPosition() const {return m_position; }
 	void setPosition(Position position) { m_position = position; }
+	short getWidth() const { return m_width; }
+	short getHeight() const { return m_height; }
+	float getHealthPoints() const { return m_hp; }
+	void setHealthPoints(float hp) { m_hp = hp; }
 
 
 protected:

@@ -1,4 +1,4 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 
 Enemy::Enemy() :
     Agent(2, 2),
@@ -6,19 +6,28 @@ Enemy::Enemy() :
     m_screenWidth(0),
     m_screenHeight(0),
     m_currentWave(0),
-    m_isWaveDead(true)
+    m_isWaveDead(true),
+    m_cikCakCounter(0)
 
 { 
-    // Initialize simple enemy shape
-    m_shipShape[0][0] = L'<';
-    m_shipShape[0][1] = L'o';
-    m_shipShape[1][0] = L' ';
-    m_shipShape[1][1] = L'-';
-
     //Get level data
     m_level = std::make_unique<Level>();
     m_level->init("Levels/Level.txt");
 
+}
+
+void Enemy::initEnemy(const Position& position, const std::vector<LevelData>& waveData, int currentWave)
+{
+    m_position = position;
+    ENEMY_TYPE type = waveData[currentWave].enemyType;
+
+    //Ship shape by type
+    if (type == ENEMY_TYPE::DRONE)
+    {
+        m_width = 1;
+        m_height = 1;
+        m_shipShape = std::vector<std::vector<wchar_t>>(m_height, std::vector<wchar_t>(m_width, L'O'));
+    }
 }
 
 void Enemy::init() 
@@ -45,10 +54,6 @@ void Enemy::init()
         {
             wave.enemyType = ENEMY_TYPE::DRONE;
         }
-        if (enemyTypeStr == "BATTLE_SHIP") 
-        {
-            wave.enemyType = ENEMY_TYPE::BATTLE_SHIP;
-        }
 
         //Get trajectory
         iss.clear();
@@ -60,15 +65,6 @@ void Enemy::init()
         {
             wave.trajectory = TRAJECTORY::LINE;
         }
-        if (trajectoryStr == "DOUBLE_LINE") 
-        {
-            wave.trajectory = TRAJECTORY::DOUBLE_LINE;
-        }
-        if (trajectoryStr == "CIKCAK") 
-        {
-            wave.trajectory = TRAJECTORY::CIKCAK;
-        }
-
 
         m_lvlData.push_back(wave);
     }
@@ -83,25 +79,8 @@ void Enemy::getScreenSize(short screenWidth, short screenHeight)
 
 void Enemy::update(float deltaTime) 
 {
-    addWaveToBuffer();
-
-    switch (m_lvlData[m_currentWave].trajectory)
-    {
-    case TRAJECTORY::LINE:
-        m_position.x += m_direction.x * 50.0f * deltaTime;
-        break;
-
-    case TRAJECTORY::DOUBLE_LINE:
-        m_position.x += m_direction.x * 50.0f * deltaTime;
-        break;
-
-    case TRAJECTORY::CIKCAK:
-
-        break;
-    }
-
-    //m_position.x += m_direction.x * 5.0f * deltaTime;
-    //m_position.y += m_direction.y * 5.0f * deltaTime;
+    //Move left for everything
+    m_position.x += m_direction.x * 500.0f * deltaTime;
 }
 
 void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer) 
@@ -121,25 +100,76 @@ void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
     }
 }
 
-void Enemy::addWaveToBuffer()
+void Enemy::addWaveToBuffer(std::vector<std::unique_ptr<Enemy>>& enemy)
 {
-    if (m_isWaveDead)
+    if (m_isWaveDead && m_currentWave < static_cast<int>(m_lvlData.size()))
     {
-        m_currentWaveData[0].enemyType = m_lvlData[m_currentWave].enemyType;
-        m_currentWaveData[0].numberOfShips = m_lvlData[m_currentWave].numberOfShips;
-        m_currentWaveData[0].trajectory = m_lvlData[m_currentWave].trajectory;
+        if (!enemy.empty())
+        {
+            return;
+        }
+
+        short shipInterspace = 7; //Ship spacing
+        Position position = { static_cast<float>(m_screenWidth + 3), 5 };
+
+        //Randomize y position
+        short randomNumber = getRandomNumber(5, 27);
+
+        //Set positions
+        if (m_lvlData[m_currentWave].trajectory == TRAJECTORY::LINE)
+        {
+            position.y = randomNumber;
+        }
+
+        //Add ships
+        for (int i = 0; i < m_lvlData[m_currentWave].numberOfShips; i++)
+        {
+            auto newEnemy = std::make_unique<Enemy>();
+            newEnemy->initEnemy(position, m_lvlData, m_currentWave);
+            enemy.push_back(std::move(newEnemy));
+
+            if (m_lvlData[m_currentWave].trajectory == TRAJECTORY::LINE)
+            {
+                position.x += shipInterspace;
+            }
+        }
 
         m_currentWave++;
         m_isWaveDead = false;
     }
 }
 
+
 const std::vector<LevelData>& Enemy::getLevelData() const
 {
     return m_lvlData;
 }
 
-const std::vector<LevelData>& Enemy::getCurrentWave() const
+void Enemy::isEnemyOnScreen(std::vector<std::unique_ptr<Enemy>>& enemy)
 {
-    return m_currentWaveData;
+    for (int i = 0; i < enemy.size();)
+    {
+        if (enemy[i]->m_position.x + 3 <= 0)
+        {
+            enemy[i] = std::move(enemy.back());
+            enemy.pop_back();
+        }
+        else
+        {
+            ++i;
+        }
+    }
+
+    if (enemy.empty())
+    {
+        m_isWaveDead = true;
+    }
+}
+
+int Enemy::getRandomNumber(int min, int max)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
+    return dis(gen);
 }

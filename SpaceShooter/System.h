@@ -55,6 +55,7 @@ private:
 	float m_time;
 
 	std::vector<Bullet> m_bullets;  //On screen
+	std::vector<std::unique_ptr<Enemy>> m_enemiesToDraw;
 };
 
 #endif  //SYSTEM_H

@@ -10,7 +10,8 @@ Player::Player() :
 	m_input(nullptr),
 	m_bullets(nullptr),
 	m_verticalSpeed(250.0f),
-	m_horizontalSpeed(500.0f)
+	m_horizontalSpeed(500.0f),
+	m_lives(3)
 
 {
 	m_shipShape[0][0] = L'-';
@@ -91,25 +92,7 @@ void Player::update(float deltaTime)
 		m_weapons[m_currentGunIndex]->update(true, bulletPosition, dir, *m_bullets);
 	}
 
-
 	limitToScreen();
-
-	////if (input.isKeyPressed(VK_SPACE) && m_weapons.size() >= 0)
-	////{
-	//	//Default weapon
-	//	if (m_currentGunIndex != -1)
-	//	{
-	//		Position bulletPosition;  //max broj metaka TODO
-	//		bulletPosition = m_position;
-	//		bulletPosition.x += 2;
-	//		bulletPosition.y += 1;
-
-	//		Direction dir = { 1, 0 };
-
-	//		m_weapons[m_currentGunIndex]->update(input.isKeyPressed(VK_SPACE), bulletPosition, dir, bullets);
-	//		/*m_weapons[m_weaponNumber]->update(input.isKeyPressed(VK_SPACE), bulletPosition[0], dir, *m_bullets, deltaTime);*/
-	//	}
-	////}
 
 }
 
@@ -132,20 +115,35 @@ void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
 
 void Player::limitToScreen()
 {
-	if (m_position.x > m_screenWidth - m_width) 
+	if (m_position.x > m_screenWidth - 25) 
 	{
-		m_position.x = m_screenWidth - m_width;
+		m_position.x = m_screenWidth - 25;
 	}
-	if (m_position.x < 0) 
+	if (m_position.x < 2) 
 	{
-		m_position.x = 0;
+		m_position.x = 2;
 	}
-	if (m_position.y > m_screenHeight - m_height) 
+	if (m_position.y > m_screenHeight - 5) 
 	{
-		m_position.y = m_screenHeight - m_height;
+		m_position.y = m_screenHeight - 5;
 	}
 	if (m_position.y < 0) 
 	{
 		m_position.y = 0;
 	}
+}
+
+bool Player::colideWithEnemy(const Agent& agent)
+{
+	Position enemyPosition = agent.getPosition();
+	short enemyWidth = agent.getWidth();
+	short enemyHeight = agent.getHeight();
+
+	if (m_position.x < enemyPosition.x + enemyWidth && m_position.x + enemyWidth > enemyPosition.x
+		&& m_position.y < enemyPosition.y + enemyHeight && m_position.y + enemyHeight > enemyPosition.y)
+	{
+		return true;
+	}
+
+	return false;
 }

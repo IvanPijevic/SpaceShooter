@@ -58,12 +58,12 @@ struct Size
 //Enemy spec
 enum class TRAJECTORY
 {
-	LINE, DOUBLE_LINE, CIKCAK
+	LINE
 };
 
 enum class ENEMY_TYPE
 {
-	DRONE, BATTLE_SHIP
+	DRONE
 };
 
 struct LevelData

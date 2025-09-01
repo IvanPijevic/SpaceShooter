@@ -5,7 +5,7 @@
 
 #include "DataStructures.h"
 #include "Draw.h"
-
+#include "Agent.h"
 
 class Bullet
 {
@@ -17,8 +17,16 @@ public:
 
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer);
 
+	//TODO fix collision function (const Agent& agent, const Bullet& bullet??)
+	//duplanje iste funkcije (Player i Bullet)
+	bool colideWithAgent(const Agent& agent);
+
+	int getLifeTime() const { return m_lifeTime; }
+	float getDamage() const { return m_damage; }
+
 private:
-	int m_damage;
+	float m_damage;
+	int m_lifeTime;
 
 	Position m_position;
 	Direction m_direction;

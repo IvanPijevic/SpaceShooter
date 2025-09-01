@@ -26,6 +26,7 @@ public:
 	//TODO check is player in window borders
 	//Logic
 	void limitToScreen();
+	bool colideWithEnemy(const Agent& agent);
 
 
 	//Set/get
@@ -33,6 +34,9 @@ public:
 	short getHeight() const { return m_height; }
 	short getWidth() const { return m_width; }
 	Position getStartPosition() const { return m_startPosition; }
+	short getLives() const { return m_lives; }
+	void setLives(short lives) { m_lives = lives; }
+	void setPosition(Position position) { m_position = position; }
 
 private:
 
@@ -43,6 +47,8 @@ private:
 	float m_horizontalSpeed;
 
 	int m_currentGunIndex;
+
+	short m_lives;
 
 	//deps for update
 	//**
