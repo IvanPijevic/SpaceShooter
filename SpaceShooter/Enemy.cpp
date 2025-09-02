@@ -7,7 +7,8 @@ Enemy::Enemy() :
     m_screenHeight(0),
     m_currentWave(0),
     m_isWaveDead(true),
-    m_cikCakCounter(0)
+    m_cikCakCounter(0),
+	m_shipsDestroyed(0)
 
 { 
     //Get level data
@@ -80,7 +81,7 @@ void Enemy::getScreenSize(short screenWidth, short screenHeight)
 void Enemy::update(float deltaTime) 
 {
     //Move left for everything
-    m_position.x += m_direction.x * 500.0f * deltaTime;
+    m_position.x += m_direction.x * 100.0f * deltaTime;
 }
 
 void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer) 
@@ -172,4 +173,14 @@ int Enemy::getRandomNumber(int min, int max)
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(min, max);
     return dis(gen);
+}
+
+const std::vector<std::vector<wchar_t>>& Enemy::getShipShape() const
+{
+    return m_shipShape;
+}
+
+bool Enemy::isWaveDead() const
+{
+    return m_isWaveDead;
 }

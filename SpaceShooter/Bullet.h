@@ -23,6 +23,7 @@ public:
 
 	int getLifeTime() const { return m_lifeTime; }
 	float getDamage() const { return m_damage; }
+	Position getPosition() const { return m_position; }
 
 private:
 	float m_damage;

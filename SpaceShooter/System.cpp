@@ -72,6 +72,9 @@ void System::gameLoop()
 			
 			m_player.update(deltaTime);
 
+			//Update enemy - bullets collision, lifetime...
+			updateBullets();
+
 			//Update enemy
 			m_enemy.addWaveToBuffer(m_enemiesToDraw);
 			for (int i = 0; i < m_enemiesToDraw.size(); i++)
@@ -96,9 +99,6 @@ void System::gameLoop()
 
 				}
 			}
-
-			//Update enemy - bullets collision, lifetime...
-			updateBullets();
 
 			m_enemy.isEnemyOnScreen(m_enemiesToDraw);
 
@@ -176,7 +176,7 @@ void System::updateBullets()
 				if (m_enemiesToDraw[i]->getHealthPoints() <= 0)
 				{
 					//Update destroyed ships
-					m_enemy->setShipsDestroyed(m_enemy->getShipsDestroyed() + 1);
+					m_enemy.setShipsDestroyed(m_enemy.getShipsDestroyed() + 1);
 
 					//Delete enemy ship from vector
 					m_enemiesToDraw[i] = std::move(m_enemiesToDraw.back());

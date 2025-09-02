@@ -167,6 +167,7 @@
     <ClCompile Include="..\SpaceShooter\Draw.cpp" />
     <ClCompile Include="..\SpaceShooter\Enemy.cpp" />
     <ClCompile Include="..\SpaceShooter\Input.cpp" />
+    <ClCompile Include="..\SpaceShooter\Level.cpp" />
     <ClCompile Include="..\SpaceShooter\Player.cpp" />
     <ClCompile Include="..\SpaceShooter\SpaceShooter.cpp" />
     <ClCompile Include="..\SpaceShooter\System.cpp" />

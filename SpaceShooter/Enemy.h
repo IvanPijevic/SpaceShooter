@@ -34,6 +34,13 @@ public:
 	//TODO move somewhere else
 	int getRandomNumber(int min, int max);
 
+	void setShipsDestroyed(int ships) { m_shipsDestroyed = ships; }
+	int getShipsDestroyed() const { return m_shipsDestroyed; }	
+
+	//Unit tests
+	const std::vector<std::vector<wchar_t>>& getShipShape() const;
+	bool isWaveDead() const;
+
 private:
 	Direction m_direction;
 	Draw m_draw;
@@ -41,6 +48,8 @@ private:
 	std::unique_ptr<Level> m_level;
 
 	std::vector<LevelData> m_lvlData;
+
+	std::vector<std::vector<wchar_t>> m_shipShape;
 	
 
 	short m_screenWidth;
@@ -48,6 +57,8 @@ private:
 	short m_cikCakCounter;
 
 	int m_currentWave;
+	int m_shipsDestroyed;
+
 	bool m_isWaveDead;
 };
 
