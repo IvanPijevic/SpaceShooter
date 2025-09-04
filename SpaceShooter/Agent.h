@@ -37,9 +37,11 @@ protected:
 	float m_shield;
 	float m_energy;
 
+	float m_speed;
+
 	Position m_position;
 
-	static constexpr float DEFAULT_HP = 100.0f;
+	static constexpr float DEFAULT_HP = 30.0f;
 	static constexpr float DEFAULT_ENERGY = 50.0f;
 
 };

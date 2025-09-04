@@ -15,6 +15,9 @@ Enemy::Enemy() :
     m_level = std::make_unique<Level>();
     m_level->init("Levels/Level.txt");
 
+    //Enemy speed
+    m_speed = 15.0f;
+
 }
 
 void Enemy::initEnemy(const Position& position, const std::vector<LevelData>& waveData, int currentWave)
@@ -81,7 +84,7 @@ void Enemy::getScreenSize(short screenWidth, short screenHeight)
 void Enemy::update(float deltaTime) 
 {
     //Move left for everything
-    m_position.x += m_direction.x * 100.0f * deltaTime;
+    m_position.x += m_direction.x * m_speed * deltaTime;
 }
 
 void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer) 

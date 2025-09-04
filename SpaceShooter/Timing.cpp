@@ -5,12 +5,12 @@ Timing::Timing(int desiredFPS) :
 	m_prevTime(std::chrono::high_resolution_clock::now())
 {}
 
-double Timing::getDeltaTime()
+float Timing::getDeltaTime()
 {
 	std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> deltaTime = currentTime - m_prevTime;
+	std::chrono::duration<float> deltaTime = currentTime - m_prevTime;
 	m_prevTime = currentTime;
-	return deltaTime.count() / m_desiredFrameRate;
+	return deltaTime.count();
 }
  
 void Timing::reset()
@@ -32,13 +32,6 @@ void FpsLimiter::begin()
 {
 	m_startTime = epochTime();
 }
-
-//float FpsLimiter::getMsSinceStart()
-//{
-//	auto currentTime = std::chrono::high_resolution_clock::now();
-//	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_startTime);
-//	return static_cast<float>(duration.count());
-//}
 
 float FpsLimiter::end()
 {

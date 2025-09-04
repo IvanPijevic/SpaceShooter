@@ -9,7 +9,7 @@ class Timing
 public:
 	Timing(int desiredFPS);
 
-	double getDeltaTime();
+	float getDeltaTime();
 	void reset();
 
 private:

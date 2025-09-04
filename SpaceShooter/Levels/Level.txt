@@ -1,25 +1,26 @@
-#
-
-#
-
-#
-
+#Prvi val
 NumberOfEnemyShips: 10
 TypeOfEnemyShips: DRONE
 EnemyTrajectory: LINE
 
+#Drugi val
 NumberOfEnemyShips: 2
 TypeOfEnemyShips: DRONE
 EnemyTrajectory: LINE
 
+#Treci val
 NumberOfEnemyShips: 1
 TypeOfEnemyShips: DRONE
 EnemyTrajectory: LINE
 
+#Cetvrti val
 NumberOfEnemyShips: 3
 TypeOfEnemyShips: DRONE
 EnemyTrajectory: LINE
 
+#Peti val
 NumberOfEnemyShips: 2
 TypeOfEnemyShips: DRONE
 EnemyTrajectory: LINE
+
+#....

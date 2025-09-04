@@ -18,7 +18,7 @@ void System::initGame()
 	m_player.init(m_player.getStartPosition(), 1.0f, m_window.getWindowSize().width, m_window.getWindowSize().height);
 	m_player.setInputAndBullets(m_input, m_bullets);
 	m_player.addWeapon(std::make_unique<Weapon>("Basic laser", 7, 1, 10.0f, 2.0f));
-	m_player.addWeapon(std::make_unique<Weapon>("Second laser", 30, 1, 20.0f, 1.0f));
+	m_player.addWeapon(std::make_unique<Weapon>("Second laser", 30, 1, 30.0f, 1.0f));
 	m_enemy.init();
 	m_enemy.getScreenSize(m_window.getWindowSize().width, m_window.getWindowSize().height);
 }
@@ -172,7 +172,6 @@ void System::updateBullets()
 				m_bullets[j] = std::move(m_bullets.back());
 				m_bullets.pop_back();
 
-				//TODO
 				if (m_enemiesToDraw[i]->getHealthPoints() <= 0)
 				{
 					//Update destroyed ships

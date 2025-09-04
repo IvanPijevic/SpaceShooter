@@ -5,37 +5,11 @@
 
 #include <memory>
 #include <set>
-#include <fstream>
-#include <filesystem>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
 {
-	//input temp class
-	class TempInput : public Input
-	{
-	public:
-		bool isKeyPressed(int key) const 
-		{
-			return pressedKeys.find(key) != pressedKeys.end();
-		}
-		void setKeyPressed(int key, bool pressed) 
-		{
-			if (pressed) 
-			{
-				pressedKeys.insert(key);
-			}
-			else 
-			{
-				pressedKeys.erase(key);
-			}
-		}
-
-	private:
-		std::set<int> pressedKeys;
-	};
-
 	TEST_CLASS(PlayerTest)
 	{
 	public:

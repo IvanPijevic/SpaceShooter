@@ -9,8 +9,8 @@ Player::Player() :
 	m_screenHeight(0),
 	m_input(nullptr),
 	m_bullets(nullptr),
-	m_verticalSpeed(250.0f),
-	m_horizontalSpeed(500.0f),
+	m_verticalSpeed(12.0f),
+	m_horizontalSpeed(30.0f),
 	m_lives(3)
 
 {
@@ -73,7 +73,7 @@ void Player::update(float deltaTime)
 		m_position.x += m_speed * m_horizontalSpeed * deltaTime;
 	}
 
-	//TODO weapon change
+	//Weapon switching and firing
 	if (m_input->isKeyPressed('Q') && !m_weapons.empty())
 	{
 		m_currentGunIndex = 0;
@@ -93,7 +93,6 @@ void Player::update(float deltaTime)
 	}
 
 	limitToScreen();
-
 }
 
 void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
