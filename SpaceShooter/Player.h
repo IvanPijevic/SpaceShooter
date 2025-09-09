@@ -23,11 +23,9 @@ public:
 	void update(float deltaTime) override;
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) override;
 
-	//TODO check is player in window borders
 	//Logic
 	void limitToScreen();
 	bool colideWithEnemy(const Agent& agent);
-
 
 	//Set/get
 	wchar_t* getPlayerShape() { return &m_shipShape[0][0]; }

@@ -5,8 +5,6 @@ Input::Input()
 
 void Input::update()
 {
-	//for(auto& it : m_keyMap)  if & than it.first  it.second ...
-
 	for (auto it = m_keyMap.begin(); it != m_keyMap.end(); it++)
 	{
 		m_previousKeyMap[it->first] = it->second;

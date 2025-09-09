@@ -16,7 +16,6 @@ public:
 	void init(const std::string& fileName);
 
 	int getNumberOfWaves() const { return m_numberOfWaves; }
-	/*int getNumberOfBosses() const { return m_numberOfBosses; }*/
 
 	std::vector<std::string>& getLevelData() { return m_levelData; }
 

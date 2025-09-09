@@ -4,7 +4,7 @@ Player::Player() :
 	Agent(2,3),
 	m_startPosition(4, 13 /*28*/),
 	m_currentGunIndex(-1),  //No weapon
-	m_speed(10.0f),  //orginalno 500 i 1000
+	m_speed(10.0f),
 	m_screenWidth(0),
 	m_screenHeight(0),
 	m_input(nullptr),

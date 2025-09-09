@@ -9,13 +9,11 @@
 class Window
 {
 public:
-	//Window(Size screenSize);
 	Window(short width, short height);
 	~Window();
 
 	void Clear();
 	void Draw();
-	//void SetPixel(short x, short y, wchar_t ch, WORD attributes = FOREGROUND_INTENSITY);
 
 	//Get
 	Size getWindowSize() const { return m_windowSize; }

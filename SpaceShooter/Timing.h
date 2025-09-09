@@ -27,7 +27,6 @@ public:
 	void init(float maxFPS);
 
 	void begin();
-	/*float getMsSinceStart();*/
 	float end();
 
 	void setMaxFPS(float maxFPS);

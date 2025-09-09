@@ -31,13 +31,11 @@ public:
 
 	void isEnemyOnScreen(std::vector<std::unique_ptr<Enemy>>& enemy);
 
-	//TODO move somewhere else
 	int getRandomNumber(int min, int max);
 
 	void setShipsDestroyed(int ships) { m_shipsDestroyed = ships; }
 	int getShipsDestroyed() const { return m_shipsDestroyed; }	
 
-	//Unit tests
 	const std::vector<std::vector<wchar_t>>& getShipShape() const;
 	bool isWaveDead() const;
 

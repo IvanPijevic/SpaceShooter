@@ -17,8 +17,6 @@ public:
 
 	void draw(Size windowSize, std::vector<CHAR_INFO>& buffer);
 
-	//TODO fix collision function (const Agent& agent, const Bullet& bullet??)
-	//duplanje iste funkcije (Player i Bullet)
 	bool colideWithAgent(const Agent& agent);
 
 	int getLifeTime() const { return m_lifeTime; }

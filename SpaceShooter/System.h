@@ -32,9 +32,6 @@ public:
 
 	void updateBullets();
 
-//public:
-//	void drawPlayer();
-
 private:
 	GameState m_gameState;
 	Window m_window;
