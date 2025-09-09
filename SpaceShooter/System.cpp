@@ -29,27 +29,32 @@ void System::processInput(float deltaTime)
 	INPUT_RECORD inputRecord;
 	DWORD eventRead;
 
+	DWORD numEvents = 0;
+	GetNumberOfConsoleInputEvents(hInput, &numEvents);
+
+	if (numEvents > 0)
+	{
 		ReadConsoleInput(hInput, &inputRecord, 1, &eventRead);
 		{
-			if (inputRecord.EventType == KEY_EVENT) 
+			if (inputRecord.EventType == KEY_EVENT)
 			{
 				const KEY_EVENT_RECORD& keyEvent = inputRecord.Event.KeyEvent;
-				if (keyEvent.bKeyDown) 
+				if (keyEvent.bKeyDown)
 				{
 					m_input.pressKey(keyEvent.wVirtualKeyCode);
 				}
-				else 
+				else
 				{
 					m_input.releaseKey(keyEvent.wVirtualKeyCode);
 				}
 
-				if (keyEvent.wVirtualKeyCode == VK_ESCAPE) 
+				if (keyEvent.wVirtualKeyCode == VK_ESCAPE)
 				{
 					m_gameState = GameState::QUIT;
 				}
 			}
 		}
-	
+	}
 }
 
 void System::gameLoop()
