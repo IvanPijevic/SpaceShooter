@@ -54,5 +54,8 @@
     <ClCompile Include="..\SpaceShooter\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\SpaceShooter\Stats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

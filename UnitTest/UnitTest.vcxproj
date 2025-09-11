@@ -170,6 +170,7 @@
     <ClCompile Include="..\SpaceShooter\Level.cpp" />
     <ClCompile Include="..\SpaceShooter\Player.cpp" />
     <ClCompile Include="..\SpaceShooter\SpaceShooter.cpp" />
+    <ClCompile Include="..\SpaceShooter\Stats.cpp" />
     <ClCompile Include="..\SpaceShooter\System.cpp" />
     <ClCompile Include="..\SpaceShooter\Timing.cpp" />
     <ClCompile Include="..\SpaceShooter\Weapon.cpp" />
