@@ -93,6 +93,7 @@ void System::gameLoop()
 				if (m_player.colideWithEnemy(*m_enemiesToDraw[i]))
 				{
 					m_player.setLives(m_player.getLives() - 1);
+					m_stats.setLives(m_player.getLives());
 
 					//Check player lives
 					if(m_player.getLives() <= 0)
@@ -137,6 +138,8 @@ void System::draw()
 		m_bullets[i].draw(m_window.getWindowSize(), m_window.getBuffer());
 	}
 
+	//Draw stats
+	m_stats.draw(m_window.getBuffer(), m_window.getWindowSize());
 
 	m_window.Draw();
 }
@@ -181,6 +184,9 @@ void System::updateBullets()
 				{
 					//Update destroyed ships
 					m_enemy.setShipsDestroyed(m_enemy.getShipsDestroyed() + 1);
+
+					//Update score
+					m_stats.setScore(m_stats.getScore() + 7);
 
 					//Delete enemy ship from vector
 					m_enemiesToDraw[i] = std::move(m_enemiesToDraw.back());

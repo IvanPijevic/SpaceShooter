@@ -144,6 +144,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Stats.cpp" />
     <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="DataStructures.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />

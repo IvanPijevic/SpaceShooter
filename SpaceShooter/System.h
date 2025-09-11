@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Timing.h"
 #include "Bullet.h"
+#include "Stats.h"
 
 enum class GameState
 {
@@ -40,6 +41,7 @@ private:
 
 	Player m_player;
 	Enemy m_enemy;
+	Stats m_stats;
 
 	//Timing
 	const int m_desiredFPS;
