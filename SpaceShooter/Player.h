@@ -15,8 +15,6 @@ class Player : public Agent
 {
 public:
 	Player();
-	~Player();
-	
 	void addWeapon(std::unique_ptr<Weapon> weapon);
 	void init(Position position, float speed, short screenWidth, short screenHeight);
 	void setInputAndBullets(Input& input, std::vector<Bullet>& bullets);
@@ -40,25 +38,25 @@ private:
 
 	std::vector<std::unique_ptr<Weapon>> m_weapons;
 
-	float m_speed;
-	float m_verticalSpeed;
-	float m_horizontalSpeed;
+	float m_speed = 10.0f;
+	float m_verticalSpeed = 12.0f;
+	float m_horizontalSpeed = 30.0f;
 
-	int m_currentGunIndex;
+	int m_currentGunIndex = 0;
 
-	short m_lives;
+	short m_lives = 3;
 
 	//deps for update
 	//**
-	short m_screenWidth;
-	short m_screenHeight;
-	Input* m_input;
-	std::vector<Bullet>* m_bullets;
+	short m_screenWidth = 0;
+	short m_screenHeight = 0;
+	Input* m_input = nullptr;
+	std::vector<Bullet>* m_bullets = nullptr;
 	//**
 
 	Draw m_draw;
 
-	Position m_startPosition;
+	Position m_startPosition = Position{4, 13 /*28*/};
 };
 
 #endif  //PLAYER_H

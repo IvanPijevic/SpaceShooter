@@ -17,7 +17,6 @@ class Enemy : public Agent
 {
 public:
 	Enemy();
-	~Enemy() = default;
 
 	void initEnemy(const Position& position, const std::vector<LevelData>& waveData, int currentWave);
 	void update(float deltaTime) override;
@@ -40,7 +39,7 @@ public:
 	bool isWaveDead() const;
 
 private:
-	Direction m_direction;
+	Direction m_direction = Direction{-1, 0};
 	Draw m_draw;
 
 	std::unique_ptr<Level> m_level;
@@ -49,15 +48,14 @@ private:
 
 	std::vector<std::vector<wchar_t>> m_shipShape;
 	
+	short m_screenWidth = 0;
+	short m_screenHeight = 0;
+	short m_cikCakCounter = 0;
 
-	short m_screenWidth;
-	short m_screenHeight;
-	short m_cikCakCounter;
+	int m_currentWave = 0;
+	int m_shipsDestroyed = 0;
 
-	int m_currentWave;
-	int m_shipsDestroyed;
-
-	bool m_isWaveDead;
+	bool m_isWaveDead = true;
 };
 
 #endif  //ENEMY_H

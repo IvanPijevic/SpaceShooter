@@ -10,9 +10,6 @@
 class Level
 {
 public:
-	Level();
-	~Level();
-
 	void init(const std::string& fileName);
 
 	int getNumberOfWaves() const { return m_numberOfWaves; }

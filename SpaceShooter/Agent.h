@@ -10,7 +10,6 @@ class Agent
 {
 public:
 	Agent(short width, short height);
-	virtual ~Agent() = default;
 
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(Size windowSize, std::vector<CHAR_INFO>& buffer) = 0;

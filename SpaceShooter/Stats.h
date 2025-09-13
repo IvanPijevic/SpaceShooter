@@ -8,13 +8,11 @@
 #include "DataStructures.h"	
 #include "Draw.h"	
 
-
 class Stats
 {
 public:
-		void init();
-		void update(float deltaTime);
 		void draw(std::vector<CHAR_INFO>& buffer, Size windowSize);
+
 		void setScore(int score) { m_score = score; }
 		int getScore() const { return m_score; }
 		void setLevel(int level) { m_level = level; }

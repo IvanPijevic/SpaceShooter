@@ -164,7 +164,6 @@
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="Draw.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Weapon.h" />

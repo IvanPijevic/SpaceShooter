@@ -5,14 +5,8 @@ Bullet::Bullet(Position position, Direction direction, float damage, float speed
 	m_direction(direction),
 	m_damage(damage),
 	m_speed(speed),
-	m_laser(L'-'),
-	m_lifeTime(100)
-{
-
-}
-
-Bullet::~Bullet()
-{ }
+	m_laser(L'-')
+{}
 
 void Bullet::update()
 {

@@ -11,8 +11,6 @@ enum class Keys
 class Input
 {
 public:
-	Input();
-
 	void update();
 	void pressKey(unsigned int keyID);
 	void releaseKey(unsigned int keyID);

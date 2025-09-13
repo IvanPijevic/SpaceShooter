@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <iterator>
 
 #include "Bullet.h"
 
@@ -11,7 +13,6 @@ class Weapon
 public:
 	Weapon(std::string name, int fireRate, int bulletsPerShot, 
 		float bulletDamage, float bulletSpeed);
-	~Weapon();
 
 	void update(bool isSpaceDown, const Position& position, const Direction& direction, std::vector<Bullet>& bullets);
 
@@ -28,7 +29,7 @@ private:
 	float m_bulletDamage;
 	float m_bulletSpeed;
 
-	int m_frameCounter;
+	int m_frameCounter = 0;
 };
 
 #endif  //WEAPON_H

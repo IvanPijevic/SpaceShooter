@@ -6,13 +6,7 @@ Weapon::Weapon(std::string name, int fireRate, int bulletsPerShot,
 	m_fireRate(fireRate),
 	m_bulletsPerShot(bulletsPerShot),
 	m_bulletDamage(bulletDamage),
-	m_bulletSpeed(bulletSpeed),
-	m_frameCounter(0)
-
-
-{ }
-
-Weapon::~Weapon()
+	m_bulletSpeed(bulletSpeed)
 {}
 
 void Weapon::update(bool isSpaceDown, const Position& position, const Direction& direction, std::vector<Bullet>& bullets)
@@ -27,8 +21,8 @@ void Weapon::update(bool isSpaceDown, const Position& position, const Direction&
 
 void Weapon::fire(const Position& position, const Direction& direction, std::vector<Bullet>& bullets)
 {
-	for (int i = 0; i < m_bulletsPerShot; i++)
-	{
-		bullets.emplace_back(position, direction, m_bulletDamage, m_bulletSpeed);
-	}
+	std::generate_n(std::back_inserter(bullets), m_bulletsPerShot, [&]()
+		{
+			return Bullet(position, direction, m_bulletDamage, m_bulletSpeed);
+		});
 }

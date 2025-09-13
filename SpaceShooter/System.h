@@ -5,6 +5,7 @@
 #define NOMINMAX
 #include <Windows.h>
 #include <algorithm>
+#include <functional>
 
 #include "Window.h"
 #include "Input.h"
@@ -23,8 +24,6 @@ enum class GameState
 class System
 {
 public:
-	System();
-
 	void initGame();
 	void processInput(float deltaTime);
 	void gameLoop();
@@ -34,8 +33,8 @@ public:
 	void updateBullets();
 
 private:
-	GameState m_gameState;
-	Window m_window;
+	GameState m_gameState = GameState::PLAY;
+	Window m_window = Window(128,32);
 	Input m_input;
 	FpsLimiter m_fpsLimiter;
 
@@ -44,14 +43,14 @@ private:
 	Stats m_stats;
 
 	//Timing
-	const int m_desiredFPS;
-	const float m_maxDeltaTime;
-	const int m_maxPhysicsSteps;
+	const int m_desiredFPS = 60;
+	const float m_maxDeltaTime = 1.0f;
+	const int m_maxPhysicsSteps = 6;
 
 	//fps
-	float m_maxFPS;
+	float m_maxFPS = 60.0f;
 	float m_fps;
-	float m_time;
+	float m_time = 0.0f;
 
 	std::vector<Bullet> m_bullets;  //On screen
 	std::vector<std::unique_ptr<Enemy>> m_enemiesToDraw;

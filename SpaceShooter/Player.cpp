@@ -1,18 +1,7 @@
 #include "Player.h"
 
 Player::Player() : 
-	Agent(2,3),
-	m_startPosition(4, 13 /*28*/),
-	m_currentGunIndex(-1),  //No weapon
-	m_speed(10.0f),
-	m_screenWidth(0),
-	m_screenHeight(0),
-	m_input(nullptr),
-	m_bullets(nullptr),
-	m_verticalSpeed(12.0f),
-	m_horizontalSpeed(30.0f),
-	m_lives(3)
-
+	Agent(2,3)
 {
 	m_shipShape[0][0] = L'-';
 	m_shipShape[0][1] = L' ';
@@ -21,9 +10,6 @@ Player::Player() :
 	m_shipShape[2][0] = L'-';
 	m_shipShape[2][1] = L' ';
 }
-
-Player::~Player()
-{ }
 
 void Player::addWeapon(std::unique_ptr<Weapon> weapon)
 {
@@ -97,19 +83,25 @@ void Player::update(float deltaTime)
 
 void Player::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
 {
-	for (int i = 0; i < m_height; i++) 
+	int rowIndex = 0;
+	for (auto& row : m_shipShape)
 	{
-		for (int j = 0; j < m_width; j++) 
+		int colIndex = 0;
+		for (auto& ch : row)
 		{
-			int x = static_cast<int>(m_position.x + j);
-			int y = static_cast<int>(m_position.y + i);
-			if (x >= 0 && x < windowSize.width && y >= 0 && y < windowSize.height) 
+			int x = static_cast<int>(m_position.x + colIndex);
+			int y = static_cast<int>(m_position.y + rowIndex);
+
+			if (x >= 0 && x < windowSize.width && y >= 0 && y < windowSize.height)
 			{
-				wchar_t ch = m_shipShape[i][j];
 				m_draw.drawPixel(x, y, ch, FOREGROUND_RED | FOREGROUND_INTENSITY, windowSize, buffer);
 			}
+
+			++colIndex;
 		}
+		++rowIndex;
 	}
+
 }
 
 void Player::limitToScreen()

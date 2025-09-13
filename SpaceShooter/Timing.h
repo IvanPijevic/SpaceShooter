@@ -22,8 +22,6 @@ private:
 class FpsLimiter
 {
 public:
-	FpsLimiter();
-
 	void init(float maxFPS);
 
 	void begin();

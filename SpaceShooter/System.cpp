@@ -1,17 +1,5 @@
 #include "System.h"
 
-System::System() :
-	m_gameState(GameState::PLAY),
-	m_window(128, 32),  //width / height 
-	m_desiredFPS(60),
-	m_maxDeltaTime(1.0f),
-	m_maxPhysicsSteps(6),
-	m_maxFPS(60.0f),
-	m_time(0.0f)
-
-{
-}
-
 void System::initGame()
 {
 	m_fpsLimiter.setMaxFPS(m_maxFPS);
@@ -82,29 +70,28 @@ void System::gameLoop()
 
 			//Update enemy
 			m_enemy.addWaveToBuffer(m_enemiesToDraw);
-			for (int i = 0; i < m_enemiesToDraw.size(); i++)
-			{
-				m_enemiesToDraw[i]->update(deltaTime);
-			}
+			std::for_each(m_enemiesToDraw.begin(), m_enemiesToDraw.end(),[deltaTime](auto& enemy) 
+				{ 
+					enemy->update(deltaTime); 
+				});
+
 
 			//Check collision Enemy - Player
-			for(int i = 0; i < m_enemiesToDraw.size(); i++)
-			{
-				if (m_player.colideWithEnemy(*m_enemiesToDraw[i]))
+			std::for_each(m_enemiesToDraw.begin(), m_enemiesToDraw.end(), [this](std::unique_ptr<Enemy>& enemy)
 				{
-					m_player.setLives(m_player.getLives() - 1);
-					m_stats.setLives(m_player.getLives());
+					if (m_player.colideWithEnemy(*enemy))
+					{
+						m_player.setLives(m_player.getLives() - 1);
+						m_stats.setLives(m_player.getLives());
 
-					//Check player lives
-					if(m_player.getLives() <= 0)
-					{ 
-						m_gameState = GameState::QUIT;
+						if (m_player.getLives() <= 0)
+						{
+							m_gameState = GameState::QUIT;
+						}
+
+						m_player.setPosition(m_player.getStartPosition());
 					}
-
-					m_player.setPosition(m_player.getStartPosition());
-
-				}
-			}
+				});
 
 			m_enemy.isEnemyOnScreen(m_enemiesToDraw);
 
@@ -127,15 +114,15 @@ void System::draw()
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
 
 	//Draw enemy ships
-	for (int i = 0; i < m_enemiesToDraw.size(); i++)
+	for (std::unique_ptr<Enemy>& enemy : m_enemiesToDraw)
 	{
-		m_enemiesToDraw[i]->draw(m_window.getWindowSize(), m_window.getBuffer());
+		enemy->draw(m_window.getWindowSize(), m_window.getBuffer());
 	}
 
 	//Draw bullets
-	for (int i = 0; i < m_bullets.size(); i++)
+	for (Bullet& bullet : m_bullets)
 	{
-		m_bullets[i].draw(m_window.getWindowSize(), m_window.getBuffer());
+		bullet.draw(m_window.getWindowSize(), m_window.getBuffer());
 	}
 
 	//Draw stats
@@ -154,45 +141,55 @@ void System::updateBullets()
 {
 
 	//Update bullets, remove old
-	for (int i = 0; i < m_bullets.size(); i++)
+	std::vector<Bullet>::iterator it = m_bullets.begin();
+	while (it != m_bullets.end())
 	{
-		m_bullets[i].update();
-
-		if (m_bullets[i].getLifeTime() <= 0)
-		{
-			m_bullets[i] = std::move(m_bullets.back());
-			m_bullets.pop_back();
-		}
+		it->update();
+		if (it->getLifeTime() <= 0)
+			it = m_bullets.erase(it);
+		else
+			++it;
 	}
 
 	//Check collision bullet - enemy
-
-	for (int i = 0; i < m_enemiesToDraw.size(); i++)
+	std::vector<std::unique_ptr<Enemy>>::iterator enemyIt = m_enemiesToDraw.begin();
+	while (enemyIt != m_enemiesToDraw.end())
 	{
-		for (int j = 0; j < m_bullets.size(); j++)
+		std::vector<Bullet>::iterator bulletIt = m_bullets.begin();
+		while (bulletIt != m_bullets.end())
 		{
-			if (m_bullets[j].colideWithAgent(*m_enemiesToDraw[i]))
+			if (bulletIt->colideWithAgent(**enemyIt))
 			{
-				//Reduce health points
-				m_enemiesToDraw[i]->setHealthPoints(m_enemiesToDraw[i]->getHealthPoints() - m_bullets[j].getDamage());
+				// Reduce health points
+				(*enemyIt)->setHealthPoints((*enemyIt)->getHealthPoints() - bulletIt->getDamage());
 
-				//Delete bullet
-				m_bullets[j] = std::move(m_bullets.back());
-				m_bullets.pop_back();
+				// Delete bullet
+				bulletIt = m_bullets.erase(bulletIt);
 
-				if (m_enemiesToDraw[i]->getHealthPoints() <= 0)
+				if ((*enemyIt)->getHealthPoints() <= 0)
 				{
-					//Update destroyed ships
+					// Update destroyed ships
 					m_enemy.setShipsDestroyed(m_enemy.getShipsDestroyed() + 1);
 
-					//Update score
+					// Update score
 					m_stats.setScore(m_stats.getScore() + 7);
 
-					//Delete enemy ship from vector
-					m_enemiesToDraw[i] = std::move(m_enemiesToDraw.back());
-					m_enemiesToDraw.pop_back();
+					// Delete enemy
+					enemyIt = m_enemiesToDraw.erase(enemyIt);
+					break;
+				}
+				else
+				{
+					continue;
 				}
 			}
+			else
+			{
+				++bulletIt;
+			}
 		}
+
+		if (enemyIt != m_enemiesToDraw.end())
+			++enemyIt;
 	}
 }

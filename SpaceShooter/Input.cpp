@@ -1,8 +1,5 @@
 #include "Input.h"
 
-Input::Input()
-{}
-
 void Input::update()
 {
 	for (auto it = m_keyMap.begin(); it != m_keyMap.end(); it++)

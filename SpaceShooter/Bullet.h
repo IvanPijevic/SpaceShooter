@@ -11,7 +11,6 @@ class Bullet
 {
 public:
 	Bullet(Position position, Direction direction, float damage, float speed);
-	~Bullet();
 
 	void update();
 
@@ -25,7 +24,7 @@ public:
 
 private:
 	float m_damage;
-	int m_lifeTime;
+	int m_lifeTime = 100;
 
 	Position m_position;
 	Direction m_direction;

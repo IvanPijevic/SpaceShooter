@@ -20,9 +20,6 @@ void Timing::reset()
 
 
 //FPS
-FpsLimiter::FpsLimiter()
-{}
-
 void FpsLimiter::init(float maxFPS)
 {
 	setMaxFPS(maxFPS);

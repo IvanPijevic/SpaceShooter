@@ -1,15 +1,7 @@
 ﻿#include "Enemy.h"
 
 Enemy::Enemy() :
-    Agent(2, 2),
-    m_direction{ -1, 0 },
-    m_screenWidth(0),
-    m_screenHeight(0),
-    m_currentWave(0),
-    m_isWaveDead(true),
-    m_cikCakCounter(0),
-	m_shipsDestroyed(0)
-
+    Agent(2, 2)
 { 
     //Get level data
     m_level = std::make_unique<Level>();
@@ -89,18 +81,21 @@ void Enemy::update(float deltaTime)
 
 void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer) 
 {
-    for (int i = 0; i < m_height; i++) 
+    int yOffset = 0;
+    for (auto& row : m_shipShape)
     {
-        for (int j = 0; j < m_width; j++) 
+        int xOffset = 0;
+        for (auto& ch : row)
         {
-            int x = static_cast<int>(m_position.x + j);
-            int y = static_cast<int>(m_position.y + i);
-            if (x >= 0 && x < windowSize.width && y >= 0 && y < windowSize.height) 
+            int x = static_cast<int>(m_position.x + xOffset);
+            int y = static_cast<int>(m_position.y + yOffset);
+            if (x >= 0 && x < windowSize.width && y >= 0 && y < windowSize.height)
             {
-                wchar_t ch = m_shipShape[i][j];
                 m_draw.drawPixel(x, y, ch, FOREGROUND_GREEN | FOREGROUND_INTENSITY, windowSize, buffer);
             }
+            ++xOffset;
         }
+        ++yOffset;
     }
 }
 
@@ -151,18 +146,10 @@ const std::vector<LevelData>& Enemy::getLevelData() const
 
 void Enemy::isEnemyOnScreen(std::vector<std::unique_ptr<Enemy>>& enemy)
 {
-    for (int i = 0; i < enemy.size();)
-    {
-        if (enemy[i]->m_position.x + 3 <= 0)
-        {
-            enemy[i] = std::move(enemy.back());
-            enemy.pop_back();
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    enemy.erase(std::remove_if(enemy.begin(), enemy.end(),[](const auto& e) 
+        { 
+            return e->m_position.x + 3 <= 0; 
+        }),enemy.end());
 
     if (enemy.empty())
     {
