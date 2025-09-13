@@ -70,10 +70,15 @@ void System::gameLoop()
 
 			//Update enemy
 			m_enemy.addWaveToBuffer(m_enemiesToDraw);
-			std::for_each(m_enemiesToDraw.begin(), m_enemiesToDraw.end(),[deltaTime](auto& enemy) 
-				{ 
-					enemy->update(deltaTime); 
-				});
+			for (auto& enemy : m_enemiesToDraw)
+			{
+				enemy->update(deltaTime);
+			}
+
+			if (m_enemiesToDraw.empty())
+			{
+				m_gameState = GameState::QUIT;
+			}
 
 
 			//Check collision Enemy - Player
@@ -90,6 +95,11 @@ void System::gameLoop()
 						}
 
 						m_player.setPosition(m_player.getStartPosition());
+
+						if (m_player.getLives() <= 0)
+						{
+							m_gameState = GameState::QUIT;
+						}
 					}
 				});
 
