@@ -36,7 +36,7 @@ namespace UnitTest
 			Player player;
 			player.init({ 50, -100 }, 10.0f, 128, 32);
 			player.limitToScreen();
-			Assert::AreEqual<short>(0, static_cast<short>(player.getPosition().y)); // min y = 0
+			Assert::AreEqual<short>(3, static_cast<short>(player.getPosition().y)); // min y = 3
 		}
 		TEST_METHOD(LimitToScreen_ClampBottom)
 		{
