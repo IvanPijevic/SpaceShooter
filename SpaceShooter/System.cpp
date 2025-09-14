@@ -72,19 +72,18 @@ void System::gameLoop()
 			m_enemy.addWaveToBuffer(m_enemiesToDraw);
 			for (auto& enemy : m_enemiesToDraw)
 			{
-				enemy->update(deltaTime);
+				enemy.update(deltaTime);
 			}
-
-			if (m_enemiesToDraw.empty())
+			//End game if all waves are done
+			if(m_enemy.isWaveDead() && m_enemy.getMaxWaves() == m_enemy.getCurrentWave())
 			{
 				m_gameState = GameState::QUIT;
 			}
 
-
 			//Check collision Enemy - Player
-			std::for_each(m_enemiesToDraw.begin(), m_enemiesToDraw.end(), [this](std::unique_ptr<Enemy>& enemy)
+			std::for_each(m_enemiesToDraw.begin(), m_enemiesToDraw.end(), [this](Enemy& enemy)
 				{
-					if (m_player.colideWithEnemy(*enemy))
+					if (m_player.colideWithEnemy(enemy))
 					{
 						m_player.setLives(m_player.getLives() - 1);
 						m_stats.setLives(m_player.getLives());
@@ -95,11 +94,6 @@ void System::gameLoop()
 						}
 
 						m_player.setPosition(m_player.getStartPosition());
-
-						if (m_player.getLives() <= 0)
-						{
-							m_gameState = GameState::QUIT;
-						}
 					}
 				});
 
@@ -124,9 +118,9 @@ void System::draw()
 	m_player.draw(m_window.getWindowSize(), m_window.getBuffer());
 
 	//Draw enemy ships
-	for (std::unique_ptr<Enemy>& enemy : m_enemiesToDraw)
+	for (Enemy& enemy : m_enemiesToDraw)
 	{
-		enemy->draw(m_window.getWindowSize(), m_window.getBuffer());
+		enemy.draw(m_window.getWindowSize(), m_window.getBuffer());
 	}
 
 	//Draw bullets
@@ -162,21 +156,21 @@ void System::updateBullets()
 	}
 
 	//Check collision bullet - enemy
-	std::vector<std::unique_ptr<Enemy>>::iterator enemyIt = m_enemiesToDraw.begin();
+	std::vector<Enemy>::iterator enemyIt = m_enemiesToDraw.begin();
 	while (enemyIt != m_enemiesToDraw.end())
 	{
 		std::vector<Bullet>::iterator bulletIt = m_bullets.begin();
 		while (bulletIt != m_bullets.end())
 		{
-			if (bulletIt->colideWithAgent(**enemyIt))
+			if (bulletIt->colideWithAgent(*enemyIt))
 			{
 				// Reduce health points
-				(*enemyIt)->setHealthPoints((*enemyIt)->getHealthPoints() - bulletIt->getDamage());
+				enemyIt->setHealthPoints(enemyIt->getHealthPoints() - bulletIt->getDamage());
 
 				// Delete bullet
 				bulletIt = m_bullets.erase(bulletIt);
 
-				if ((*enemyIt)->getHealthPoints() <= 0)
+				if (enemyIt->getHealthPoints() <= 0)
 				{
 					// Update destroyed ships
 					m_enemy.setShipsDestroyed(m_enemy.getShipsDestroyed() + 1);

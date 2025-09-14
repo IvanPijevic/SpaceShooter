@@ -3,9 +3,7 @@
 Enemy::Enemy() :
     Agent(2, 2)
 { 
-    //Get level data
-    m_level = std::make_unique<Level>();
-    m_level->init("Levels/Level.txt");
+    m_level.init("Levels/Level.txt");
 
     //Enemy speed
     m_speed = 15.0f;
@@ -28,7 +26,7 @@ void Enemy::initEnemy(const Position& position, const std::vector<LevelData>& wa
 
 void Enemy::init() 
 {
-    std::vector<std::string> levelData = m_level->getLevelData();
+    const std::vector<std::string>& levelData = m_level.getLevelData();
     m_lvlData.clear();
 
     for (size_t i = 0; i < levelData.size(); i += 3) 
@@ -99,10 +97,12 @@ void Enemy::draw(Size windowSize, std::vector<CHAR_INFO>& buffer)
     }
 }
 
-void Enemy::addWaveToBuffer(std::vector<std::unique_ptr<Enemy>>& enemy)
+void Enemy::addWaveToBuffer(std::vector<Enemy>& enemy)
 {
     if (m_isWaveDead && m_currentWave < static_cast<int>(m_lvlData.size()))
     {
+		m_maxWaves = static_cast<int>(m_lvlData.size());
+
         if (!enemy.empty())
         {
             return;
@@ -112,7 +112,7 @@ void Enemy::addWaveToBuffer(std::vector<std::unique_ptr<Enemy>>& enemy)
         Position position = { static_cast<float>(m_screenWidth + 3), 5 };
 
         //Randomize y position
-        short randomNumber = getRandomNumber(5, 27);
+        short randomNumber = getRandomNumber(7, 27);
 
         //Set positions
         if (m_lvlData[m_currentWave].trajectory == TRAJECTORY::LINE)
@@ -123,9 +123,9 @@ void Enemy::addWaveToBuffer(std::vector<std::unique_ptr<Enemy>>& enemy)
         //Add ships
         for (int i = 0; i < m_lvlData[m_currentWave].numberOfShips; i++)
         {
-            auto newEnemy = std::make_unique<Enemy>();
-            newEnemy->initEnemy(position, m_lvlData, m_currentWave);
-            enemy.push_back(std::move(newEnemy));
+			Enemy newEnemy;
+            newEnemy.initEnemy(position, m_lvlData, m_currentWave);
+            enemy.push_back(newEnemy);
 
             if (m_lvlData[m_currentWave].trajectory == TRAJECTORY::LINE)
             {
@@ -144,11 +144,11 @@ const std::vector<LevelData>& Enemy::getLevelData() const
     return m_lvlData;
 }
 
-void Enemy::isEnemyOnScreen(std::vector<std::unique_ptr<Enemy>>& enemy)
+void Enemy::isEnemyOnScreen(std::vector<Enemy>& enemy)
 {
     enemy.erase(std::remove_if(enemy.begin(), enemy.end(),[](const auto& e) 
         { 
-            return e->m_position.x + 3 <= 0; 
+            return e.m_position.x + 3 <= 0; 
         }),enemy.end());
 
     if (enemy.empty())

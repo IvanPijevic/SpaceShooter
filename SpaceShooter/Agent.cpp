@@ -5,7 +5,6 @@ Agent::Agent(short width, short height) :
 	m_height(height),
 	m_hp(DEFAULT_HP),
 	m_shield(0),
-	m_energy(DEFAULT_ENERGY),
 	m_position{ 0,0 },
 	m_speed(0.0f)
 

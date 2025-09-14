@@ -118,9 +118,9 @@ void Player::limitToScreen()
 	{
 		m_position.y = m_screenHeight - 5;
 	}
-	if (m_position.y < 0) 
+	if (m_position.y < 3) 
 	{
-		m_position.y = 0;
+		m_position.y = 3;
 	}
 }
 

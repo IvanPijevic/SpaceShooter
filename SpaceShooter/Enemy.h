@@ -24,16 +24,18 @@ public:
 	void init();
 	void getScreenSize(short screenWidth, short screenHeight);
 
-	void addWaveToBuffer(std::vector<std::unique_ptr<Enemy>>& enemy);
+	void addWaveToBuffer(std::vector<Enemy>& enemy);
 
 	const std::vector<LevelData>& getLevelData() const;
 
-	void isEnemyOnScreen(std::vector<std::unique_ptr<Enemy>>& enemy);
+	void isEnemyOnScreen(std::vector<Enemy>& enemy);
 
 	int getRandomNumber(int min, int max);
 
 	void setShipsDestroyed(int ships) { m_shipsDestroyed = ships; }
 	int getShipsDestroyed() const { return m_shipsDestroyed; }	
+	int getCurrentWave() const { return m_currentWave; }
+	int getMaxWaves() const { return m_maxWaves; }
 
 	const std::vector<std::vector<wchar_t>>& getShipShape() const;
 	bool isWaveDead() const;
@@ -42,7 +44,7 @@ private:
 	Direction m_direction = Direction{-1, 0};
 	Draw m_draw;
 
-	std::unique_ptr<Level> m_level;
+	Level m_level;
 
 	std::vector<LevelData> m_lvlData;
 
@@ -52,6 +54,7 @@ private:
 	short m_screenHeight = 0;
 	short m_cikCakCounter = 0;
 
+	int m_maxWaves = 0;
 	int m_currentWave = 0;
 	int m_shipsDestroyed = 0;
 
